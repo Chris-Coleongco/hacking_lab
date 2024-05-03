@@ -1,0 +1,6 @@
+as user postgres, i was unable to add my evil dashboard php code to the server :c
+
+did find in the dashboard php file the password of the postgres user so i can use the open 22 port for ssh.
+
+okay so i can use vi on a configuration file with sudo permissions when i checked with sudo -l:
+    (ALL) /bin/vi /etc/postgresql/11/main/pg_hba.conf
