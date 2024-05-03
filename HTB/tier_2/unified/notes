@@ -1,0 +1,31 @@
+could perhaps find an endpoint from JNDI to exploit?
+
+might be able to get a reverse shell
+
+https://github.com/welk1n/JNDI-Injection-Exploit/       <--- this is a repo with a jndi injection
+
+got a listener server up and running with the above repo, as can be seen in the output, the LDAPSERVER is on port 1389 so i needa add that as the port for my http request manipulation
+
+wasnt able to use this repo for some reason :/ using this one now: https://github.com/kozmer/log4j-shell-poc.git
+
+im going back to the old repo, i wanna try downgrading java version
+
+okay so i had to look at the walkthru and apparently there was a git repo that actually works there TwT omg... okay anyways
+
+theres a mongodb database running on the server. i was able to see the databases it's running and can use javascript to update the database. i might be able to change the password of the user somehow. maybe through changing the email of the administrator user?
+
+lets try that...
+
+trying this command: mongo --port 27117 ace --eval "db.admin.update({_id:ObjectId("61ce278f46e0fb0012d47ee4")},{$set:{"email":"pajil98221@goulink.com"}})"
+
+
+doesnt work: ongoDB server version: 3.6.3
+2024-05-03T20:58:30.555+0100 E QUERY    [thread1] SyntaxError: identifier starts immediately after numeric literal @(shell eval):1:30
+
+wait maybe its cuz of quotes
+
+unfortunatelyyyy nope its not. :/ mongo --port 27117 ace --eval "db.admin.update({_id:ObjectId('61ce278f46e0fb0012d47ee4')},{$set:{'email':'pajil98221@goulink.com'}})"
+
+this shit doesnt work.
+
+neeeeeed to change osmething else in the db. the password is hashed so if i can make my own password of the same hash function then i could insert it there and log in with that?

