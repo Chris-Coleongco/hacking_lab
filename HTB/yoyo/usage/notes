@@ -37,3 +37,20 @@ Table: admin_users
 
 its hashed...
 but with whawt?
+
+
+
+okay it was bcrypt and it took a bit but i got ittt
+
+user: admin
+pass: whatever1
+
+im in as adminss
+
+anddd theres a buncha dependencies listed and onee has arbitrary code execute through a file upload. gonna try uploading a php file to the pfp and get a reverse shelll
+
+
+reminder to self to read what the code is for that and why it works again its in kali webshells
+
+
+

