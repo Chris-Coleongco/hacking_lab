@@ -1,0 +1,1664 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1.0"
+    />
+    <title>FFUF Report - </title>
+
+    
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+	/>
+	<link 
+	  rel="stylesheet" 
+	  type="text/css" 
+	  href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css"
+	/>
+  
+  </head>
+
+  <body>
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo">FFUF</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+        </ul>
+      </div>
+    </nav>
+
+    <main class="section no-pad-bot" id="index-banner">
+      <div class="container">
+        <br /><br />
+        <h1 class="header center ">FFUF Report</h1>
+        <div class="row center">
+
+		<pre>ffuf -u http://solarlab.htb/FUZZ -w /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt -of html -o ffuf-dirscan</pre>
+		<pre>2024-05-15T20:36:30-04:00</pre>
+
+   <table id="ffufreport">
+        <thead>
+        <div style="display:none">
+|result_raw|StatusCode|FUZZ|Url|RedirectLocation|Position|ContentLength|ContentWords|ContentLines|ContentType|Duration|Resultfile|ScraperData|FfufHash|
+        </div>
+          <tr>
+              <th>Status</th>
+              <th>FUZZ</th>
+			  <th>URL</th>
+			  <th>Redirect location</th>
+              <th>Position</th>
+              <th>Length</th>
+              <th>Words</th>
+			  <th>Lines</th>
+			  <th>Type</th>
+              <th>Duration</th>
+			  <th>Resultfile</th>
+              <th>Scraper data</th>
+              <th>Ffuf Hash</th>
+          </tr>
+        </thead>
+
+        <tbody>
+			
+                <div style="display:none">
+|result_raw|301|images|http://solarlab.htb/images|http://solarlab.htb/images/|16|169|5|8|text/html|792.042405ms|||066e510|
+                </div>
+                <tr class="result-301" style="background-color: #bbbbe6;">
+                    <td><font color="black" class="status-code">301</font></td>
+                    
+                        <td>images</td>
+                    
+                    <td><a href="http://solarlab.htb/images">http://solarlab.htb/images</a></td>
+                    <td><a href="http://solarlab.htb/images/">http://solarlab.htb/images/</a></td>
+                    <td>16</td>
+                    <td>169</td>
+                    <td>5</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>792.042405ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e510</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|200|# on atleast 2 different hosts|http://solarlab.htb/# on atleast 2 different hosts||12|16210|842|473|text/html|81.377989ms|||066e5c|
+                </div>
+                <tr class="result-200" style="background-color: #adea9e;">
+                    <td><font color="black" class="status-code">200</font></td>
+                    
+                        <td># on atleast 2 different hosts</td>
+                    
+                    <td><a href="http://solarlab.htb/#%20on%20atleast%202%20different%20hosts">http://solarlab.htb/# on atleast 2 different hosts</a></td>
+                    <td><a href=""></a></td>
+                    <td>12</td>
+                    <td>16210</td>
+                    <td>842</td>
+					<td>473</td>
+					<td>text/html</td>
+					<td>81.377989ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e5c</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|200|# This work is licensed under the Creative Commons |http://solarlab.htb/# This work is licensed under the Creative Commons ||5|16210|842|473|text/html|150.1973ms|||066e55|
+                </div>
+                <tr class="result-200" style="background-color: #adea9e;">
+                    <td><font color="black" class="status-code">200</font></td>
+                    
+                        <td># This work is licensed under the Creative Commons </td>
+                    
+                    <td><a href="http://solarlab.htb/#%20This%20work%20is%20licensed%20under%20the%20Creative%20Commons%20">http://solarlab.htb/# This work is licensed under the Creative Commons </a></td>
+                    <td><a href=""></a></td>
+                    <td>5</td>
+                    <td>16210</td>
+                    <td>842</td>
+					<td>473</td>
+					<td>text/html</td>
+					<td>150.1973ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e55</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|200|#|http://solarlab.htb/#||4|16210|842|473|text/html|290.478569ms|||066e54|
+                </div>
+                <tr class="result-200" style="background-color: #adea9e;">
+                    <td><font color="black" class="status-code">200</font></td>
+                    
+                        <td>#</td>
+                    
+                    <td><a href="http://solarlab.htb/#">http://solarlab.htb/#</a></td>
+                    <td><a href=""></a></td>
+                    <td>4</td>
+                    <td>16210</td>
+                    <td>842</td>
+					<td>473</td>
+					<td>text/html</td>
+					<td>290.478569ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e54</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|200||http://solarlab.htb/||14|16210|842|473|text/html|372.926155ms|||066e5e|
+                </div>
+                <tr class="result-200" style="background-color: #adea9e;">
+                    <td><font color="black" class="status-code">200</font></td>
+                    
+                        <td></td>
+                    
+                    <td><a href="http://solarlab.htb/">http://solarlab.htb/</a></td>
+                    <td><a href=""></a></td>
+                    <td>14</td>
+                    <td>16210</td>
+                    <td>842</td>
+					<td>473</td>
+					<td>text/html</td>
+					<td>372.926155ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e5e</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|200|# Suite 300, San Francisco, California, 94105, USA.|http://solarlab.htb/# Suite 300, San Francisco, California, 94105, USA.||9|16210|842|473|text/html|577.735593ms|||066e59|
+                </div>
+                <tr class="result-200" style="background-color: #adea9e;">
+                    <td><font color="black" class="status-code">200</font></td>
+                    
+                        <td># Suite 300, San Francisco, California, 94105, USA.</td>
+                    
+                    <td><a href="http://solarlab.htb/#%20Suite%20300,%20San%20Francisco,%20California,%2094105,%20USA.">http://solarlab.htb/# Suite 300, San Francisco, California, 94105, USA.</a></td>
+                    <td><a href=""></a></td>
+                    <td>9</td>
+                    <td>16210</td>
+                    <td>842</td>
+					<td>473</td>
+					<td>text/html</td>
+					<td>577.735593ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e59</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|200|# directory-list-lowercase-2.3-medium.txt|http://solarlab.htb/# directory-list-lowercase-2.3-medium.txt||1|16210|842|473|text/html|444.239983ms|||066e51|
+                </div>
+                <tr class="result-200" style="background-color: #adea9e;">
+                    <td><font color="black" class="status-code">200</font></td>
+                    
+                        <td># directory-list-lowercase-2.3-medium.txt</td>
+                    
+                    <td><a href="http://solarlab.htb/#%20directory-list-lowercase-2.3-medium.txt">http://solarlab.htb/# directory-list-lowercase-2.3-medium.txt</a></td>
+                    <td><a href=""></a></td>
+                    <td>1</td>
+                    <td>16210</td>
+                    <td>842</td>
+					<td>473</td>
+					<td>text/html</td>
+					<td>444.239983ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e51</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|200|#|http://solarlab.htb/#||2|16210|842|473|text/html|648.834545ms|||066e52|
+                </div>
+                <tr class="result-200" style="background-color: #adea9e;">
+                    <td><font color="black" class="status-code">200</font></td>
+                    
+                        <td>#</td>
+                    
+                    <td><a href="http://solarlab.htb/#">http://solarlab.htb/#</a></td>
+                    <td><a href=""></a></td>
+                    <td>2</td>
+                    <td>16210</td>
+                    <td>842</td>
+					<td>473</td>
+					<td>text/html</td>
+					<td>648.834545ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|200|# Priority ordered case insensative list, where entries were found |http://solarlab.htb/# Priority ordered case insensative list, where entries were found ||11|16210|842|473|text/html|725.851117ms|||066e5b|
+                </div>
+                <tr class="result-200" style="background-color: #adea9e;">
+                    <td><font color="black" class="status-code">200</font></td>
+                    
+                        <td># Priority ordered case insensative list, where entries were found </td>
+                    
+                    <td><a href="http://solarlab.htb/#%20Priority%20ordered%20case%20insensative%20list,%20where%20entries%20were%20found%20">http://solarlab.htb/# Priority ordered case insensative list, where entries were found </a></td>
+                    <td><a href=""></a></td>
+                    <td>11</td>
+                    <td>16210</td>
+                    <td>842</td>
+					<td>473</td>
+					<td>text/html</td>
+					<td>725.851117ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e5b</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|200|# Copyright 2007 James Fisher|http://solarlab.htb/# Copyright 2007 James Fisher||3|16210|842|473|text/html|823.338739ms|||066e53|
+                </div>
+                <tr class="result-200" style="background-color: #adea9e;">
+                    <td><font color="black" class="status-code">200</font></td>
+                    
+                        <td># Copyright 2007 James Fisher</td>
+                    
+                    <td><a href="http://solarlab.htb/#%20Copyright%202007%20James%20Fisher">http://solarlab.htb/# Copyright 2007 James Fisher</a></td>
+                    <td><a href=""></a></td>
+                    <td>3</td>
+                    <td>16210</td>
+                    <td>842</td>
+					<td>473</td>
+					<td>text/html</td>
+					<td>823.338739ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e53</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|200|#|http://solarlab.htb/#||13|16210|842|473|text/html|876.692095ms|||066e5d|
+                </div>
+                <tr class="result-200" style="background-color: #adea9e;">
+                    <td><font color="black" class="status-code">200</font></td>
+                    
+                        <td>#</td>
+                    
+                    <td><a href="http://solarlab.htb/#">http://solarlab.htb/#</a></td>
+                    <td><a href=""></a></td>
+                    <td>13</td>
+                    <td>16210</td>
+                    <td>842</td>
+					<td>473</td>
+					<td>text/html</td>
+					<td>876.692095ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e5d</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|200|#|http://solarlab.htb/#||10|16210|842|473|text/html|938.450993ms|||066e5a|
+                </div>
+                <tr class="result-200" style="background-color: #adea9e;">
+                    <td><font color="black" class="status-code">200</font></td>
+                    
+                        <td>#</td>
+                    
+                    <td><a href="http://solarlab.htb/#">http://solarlab.htb/#</a></td>
+                    <td><a href=""></a></td>
+                    <td>10</td>
+                    <td>16210</td>
+                    <td>842</td>
+					<td>473</td>
+					<td>text/html</td>
+					<td>938.450993ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e5a</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|200|# license, visit http://creativecommons.org/licenses/by-sa/3.0/ |http://solarlab.htb/# license, visit http://creativecommons.org/licenses/by-sa/3.0/ ||7|16210|842|473|text/html|1.052309013s|||066e57|
+                </div>
+                <tr class="result-200" style="background-color: #adea9e;">
+                    <td><font color="black" class="status-code">200</font></td>
+                    
+                        <td># license, visit http://creativecommons.org/licenses/by-sa/3.0/ </td>
+                    
+                    <td><a href="http://solarlab.htb/#%20license,%20visit%20http://creativecommons.org/licenses/by-sa/3.0/%20">http://solarlab.htb/# license, visit http://creativecommons.org/licenses/by-sa/3.0/ </a></td>
+                    <td><a href=""></a></td>
+                    <td>7</td>
+                    <td>16210</td>
+                    <td>842</td>
+					<td>473</td>
+					<td>text/html</td>
+					<td>1.052309013s</td>
+                    <td></td>
+					<td></td>
+					<td>066e57</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|200|# Attribution-Share Alike 3.0 License. To view a copy of this |http://solarlab.htb/# Attribution-Share Alike 3.0 License. To view a copy of this ||6|16210|842|473|text/html|1.011572851s|||066e56|
+                </div>
+                <tr class="result-200" style="background-color: #adea9e;">
+                    <td><font color="black" class="status-code">200</font></td>
+                    
+                        <td># Attribution-Share Alike 3.0 License. To view a copy of this </td>
+                    
+                    <td><a href="http://solarlab.htb/#%20Attribution-Share%20Alike%203.0%20License.%20To%20view%20a%20copy%20of%20this%20">http://solarlab.htb/# Attribution-Share Alike 3.0 License. To view a copy of this </a></td>
+                    <td><a href=""></a></td>
+                    <td>6</td>
+                    <td>16210</td>
+                    <td>842</td>
+					<td>473</td>
+					<td>text/html</td>
+					<td>1.011572851s</td>
+                    <td></td>
+					<td></td>
+					<td>066e56</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|200|# or send a letter to Creative Commons, 171 Second Street, |http://solarlab.htb/# or send a letter to Creative Commons, 171 Second Street, ||8|16210|842|473|text/html|1.126676363s|||066e58|
+                </div>
+                <tr class="result-200" style="background-color: #adea9e;">
+                    <td><font color="black" class="status-code">200</font></td>
+                    
+                        <td># or send a letter to Creative Commons, 171 Second Street, </td>
+                    
+                    <td><a href="http://solarlab.htb/#%20or%20send%20a%20letter%20to%20Creative%20Commons,%20171%20Second%20Street,%20">http://solarlab.htb/# or send a letter to Creative Commons, 171 Second Street, </a></td>
+                    <td><a href=""></a></td>
+                    <td>8</td>
+                    <td>16210</td>
+                    <td>842</td>
+					<td>473</td>
+					<td>text/html</td>
+					<td>1.126676363s</td>
+                    <td></td>
+					<td></td>
+					<td>066e58</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|301|assets|http://solarlab.htb/assets|http://solarlab.htb/assets/|287|169|5|8|text/html|155.008498ms|||066e511f|
+                </div>
+                <tr class="result-301" style="background-color: #bbbbe6;">
+                    <td><font color="black" class="status-code">301</font></td>
+                    
+                        <td>assets</td>
+                    
+                    <td><a href="http://solarlab.htb/assets">http://solarlab.htb/assets</a></td>
+                    <td><a href="http://solarlab.htb/assets/">http://solarlab.htb/assets/</a></td>
+                    <td>287</td>
+                    <td>169</td>
+                    <td>5</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>155.008498ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e511f</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|200|%20|http://solarlab.htb/%20||3548|16210|842|473|text/html|83.773436ms|||066e5ddc|
+                </div>
+                <tr class="result-200" style="background-color: #adea9e;">
+                    <td><font color="black" class="status-code">200</font></td>
+                    
+                        <td>%20</td>
+                    
+                    <td><a href="http://solarlab.htb/%20">http://solarlab.htb/%20</a></td>
+                    <td><a href=""></a></td>
+                    <td>3548</td>
+                    <td>16210</td>
+                    <td>842</td>
+					<td>473</td>
+					<td>text/html</td>
+					<td>83.773436ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e5ddc</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|*checkout*|http://solarlab.htb/*checkout*||6513|177|7|8|text/html|85.622812ms|||066e51971|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>*checkout*</td>
+                    
+                    <td><a href="http://solarlab.htb/*checkout*">http://solarlab.htb/*checkout*</a></td>
+                    <td><a href=""></a></td>
+                    <td>6513</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>85.622812ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e51971</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|*docroot*|http://solarlab.htb/*docroot*||14306|177|7|8|text/html|133.902085ms|||066e537e2|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>*docroot*</td>
+                    
+                    <td><a href="http://solarlab.htb/*docroot*">http://solarlab.htb/*docroot*</a></td>
+                    <td><a href=""></a></td>
+                    <td>14306</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>133.902085ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e537e2</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|*|http://solarlab.htb/*||15161|177|7|8|text/html|100.301893ms|||066e53b39|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>*</td>
+                    
+                    <td><a href="http://solarlab.htb/*">http://solarlab.htb/*</a></td>
+                    <td><a href=""></a></td>
+                    <td>15161</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>100.301893ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e53b39</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|con|http://solarlab.htb/con||16602|177|7|8|text/html|84.002739ms|||066e540da|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>con</td>
+                    
+                    <td><a href="http://solarlab.htb/con">http://solarlab.htb/con</a></td>
+                    <td><a href=""></a></td>
+                    <td>16602</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>84.002739ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e540da</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|http%3a%2f%2fwww|http://solarlab.htb/http%3a%2f%2fwww||21172|177|7|8|text/html|78.58924ms|||066e552b4|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>http%3a%2f%2fwww</td>
+                    
+                    <td><a href="http://solarlab.htb/http%3a%2f%2fwww">http://solarlab.htb/http%3a%2f%2fwww</a></td>
+                    <td><a href=""></a></td>
+                    <td>21172</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>78.58924ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e552b4</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|http%3a|http://solarlab.htb/http%3a||29385|177|7|8|text/html|78.40286ms|||066e572c9|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>http%3a</td>
+                    
+                    <td><a href="http://solarlab.htb/http%3a">http://solarlab.htb/http%3a</a></td>
+                    <td><a href=""></a></td>
+                    <td>29385</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>78.40286ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e572c9</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|**http%3a|http://solarlab.htb/**http%3a||32846|177|7|8|text/html|78.606968ms|||066e5804e|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>**http%3a</td>
+                    
+                    <td><a href="http://solarlab.htb/**http%3a">http://solarlab.htb/**http%3a</a></td>
+                    <td><a href=""></a></td>
+                    <td>32846</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>78.606968ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e5804e</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|*http%3a|http://solarlab.htb/*http%3a||36200|177|7|8|text/html|94.105246ms|||066e58d68|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>*http%3a</td>
+                    
+                    <td><a href="http://solarlab.htb/*http%3a">http://solarlab.htb/*http%3a</a></td>
+                    <td><a href=""></a></td>
+                    <td>36200</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>94.105246ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e58d68</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|200||http://solarlab.htb/||41849|16210|842|473|text/html|116.03664ms|||066e5a379|
+                </div>
+                <tr class="result-200" style="background-color: #adea9e;">
+                    <td><font color="black" class="status-code">200</font></td>
+                    
+                        <td></td>
+                    
+                    <td><a href="http://solarlab.htb/">http://solarlab.htb/</a></td>
+                    <td><a href=""></a></td>
+                    <td>41849</td>
+                    <td>16210</td>
+                    <td>842</td>
+					<td>473</td>
+					<td>text/html</td>
+					<td>116.03664ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e5a379</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|http%3a%2f%2fyoutube|http://solarlab.htb/http%3a%2f%2fyoutube||51407|177|7|8|text/html|128.042404ms|||066e5c8cf|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>http%3a%2f%2fyoutube</td>
+                    
+                    <td><a href="http://solarlab.htb/http%3a%2f%2fyoutube">http://solarlab.htb/http%3a%2f%2fyoutube</a></td>
+                    <td><a href=""></a></td>
+                    <td>51407</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>128.042404ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e5c8cf</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%c0|http://solarlab.htb/%c0||59488|177|7|8|text/html|128.368684ms|||066e5e860|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%c0</td>
+                    
+                    <td><a href="http://solarlab.htb/%c0">http://solarlab.htb/%c0</a></td>
+                    <td><a href=""></a></td>
+                    <td>59488</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>128.368684ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e5e860</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|http%3a%2f%2fblogs|http://solarlab.htb/http%3a%2f%2fblogs||64387|177|7|8|text/html|82.107186ms|||066e5fb83|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>http%3a%2f%2fblogs</td>
+                    
+                    <td><a href="http://solarlab.htb/http%3a%2f%2fblogs">http://solarlab.htb/http%3a%2f%2fblogs</a></td>
+                    <td><a href=""></a></td>
+                    <td>64387</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>82.107186ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e5fb83</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|http%3a%2f%2fblog|http://solarlab.htb/http%3a%2f%2fblog||66286|177|7|8|text/html|95.614241ms|||066e5102ee|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>http%3a%2f%2fblog</td>
+                    
+                    <td><a href="http://solarlab.htb/http%3a%2f%2fblog">http://solarlab.htb/http%3a%2f%2fblog</a></td>
+                    <td><a href=""></a></td>
+                    <td>66286</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>95.614241ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e5102ee</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|**http%3a%2f%2fwww|http://solarlab.htb/**http%3a%2f%2fwww||76641|177|7|8|text/html|85.381454ms|||066e512b61|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>**http%3a%2f%2fwww</td>
+                    
+                    <td><a href="http://solarlab.htb/**http%3a%2f%2fwww">http://solarlab.htb/**http%3a%2f%2fwww</a></td>
+                    <td><a href=""></a></td>
+                    <td>76641</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>85.381454ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e512b61</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%3frid%3d2671|http://solarlab.htb/%3frid%3d2671||97701|177|7|8|text/html|76.919069ms|||066e517da5|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%3frid%3d2671</td>
+                    
+                    <td><a href="http://solarlab.htb/%3frid%3d2671">http://solarlab.htb/%3frid%3d2671</a></td>
+                    <td><a href=""></a></td>
+                    <td>97701</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>76.919069ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e517da5</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|devinmoore*|http://solarlab.htb/devinmoore*||101615|177|7|8|text/html|86.850661ms|||066e518cef|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>devinmoore*</td>
+                    
+                    <td><a href="http://solarlab.htb/devinmoore*">http://solarlab.htb/devinmoore*</a></td>
+                    <td><a href=""></a></td>
+                    <td>101615</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>86.850661ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e518cef</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|200109*|http://solarlab.htb/200109*||156267|177|7|8|text/html|86.813242ms|||066e52626b|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>200109*</td>
+                    
+                    <td><a href="http://solarlab.htb/200109*">http://solarlab.htb/200109*</a></td>
+                    <td><a href=""></a></td>
+                    <td>156267</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>86.813242ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52626b</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|*sa_|http://solarlab.htb/*sa_||158269|177|7|8|text/html|193.053661ms|||066e526a3d|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>*sa_</td>
+                    
+                    <td><a href="http://solarlab.htb/*sa_">http://solarlab.htb/*sa_</a></td>
+                    <td><a href=""></a></td>
+                    <td>158269</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>193.053661ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e526a3d</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|*dc_|http://solarlab.htb/*dc_||158270|177|7|8|text/html|167.747204ms|||066e526a3e|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>*dc_</td>
+                    
+                    <td><a href="http://solarlab.htb/*dc_">http://solarlab.htb/*dc_</a></td>
+                    <td><a href=""></a></td>
+                    <td>158270</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>167.747204ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e526a3e</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|http%3a%2f%2fcommunity|http://solarlab.htb/http%3a%2f%2fcommunity||174811|177|7|8|text/html|79.97975ms|||066e52aadb|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>http%3a%2f%2fcommunity</td>
+                    
+                    <td><a href="http://solarlab.htb/http%3a%2f%2fcommunity">http://solarlab.htb/http%3a%2f%2fcommunity</a></td>
+                    <td><a href=""></a></td>
+                    <td>174811</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>79.97975ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52aadb</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|http%3a%2f%2fradar|http://solarlab.htb/http%3a%2f%2fradar||183936|177|7|8|text/html|118.236387ms|||066e52ce80|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>http%3a%2f%2fradar</td>
+                    
+                    <td><a href="http://solarlab.htb/http%3a%2f%2fradar">http://solarlab.htb/http%3a%2f%2fradar</a></td>
+                    <td><a href=""></a></td>
+                    <td>183936</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>118.236387ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52ce80</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%cf|http://solarlab.htb/%cf||191971|177|7|8|text/html|99.953501ms|||066e52ede3|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%cf</td>
+                    
+                    <td><a href="http://solarlab.htb/%cf">http://solarlab.htb/%cf</a></td>
+                    <td><a href=""></a></td>
+                    <td>191971</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>99.953501ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52ede3</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%d8|http://solarlab.htb/%d8||191970|177|7|8|text/html|104.744456ms|||066e52ede2|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%d8</td>
+                    
+                    <td><a href="http://solarlab.htb/%d8">http://solarlab.htb/%d8</a></td>
+                    <td><a href=""></a></td>
+                    <td>191970</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>104.744456ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52ede2</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%ca|http://solarlab.htb/%ca||191979|177|7|8|text/html|103.137606ms|||066e52edeb|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%ca</td>
+                    
+                    <td><a href="http://solarlab.htb/%ca">http://solarlab.htb/%ca</a></td>
+                    <td><a href=""></a></td>
+                    <td>191979</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>103.137606ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52edeb</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%cc|http://solarlab.htb/%cc||191976|177|7|8|text/html|107.741798ms|||066e52ede8|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%cc</td>
+                    
+                    <td><a href="http://solarlab.htb/%cc">http://solarlab.htb/%cc</a></td>
+                    <td><a href=""></a></td>
+                    <td>191976</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>107.741798ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52ede8</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%cd|http://solarlab.htb/%cd||191974|177|7|8|text/html|109.81413ms|||066e52ede6|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%cd</td>
+                    
+                    <td><a href="http://solarlab.htb/%cd">http://solarlab.htb/%cd</a></td>
+                    <td><a href=""></a></td>
+                    <td>191974</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>109.81413ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52ede6</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%d7|http://solarlab.htb/%d7||191982|177|7|8|text/html|106.668261ms|||066e52edee|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%d7</td>
+                    
+                    <td><a href="http://solarlab.htb/%d7">http://solarlab.htb/%d7</a></td>
+                    <td><a href=""></a></td>
+                    <td>191982</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>106.668261ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52edee</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%ce|http://solarlab.htb/%ce||191972|177|7|8|text/html|127.545256ms|||066e52ede4|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%ce</td>
+                    
+                    <td><a href="http://solarlab.htb/%ce">http://solarlab.htb/%ce</a></td>
+                    <td><a href=""></a></td>
+                    <td>191972</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>127.545256ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52ede4</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%d1|http://solarlab.htb/%d1||191981|177|7|8|text/html|107.817474ms|||066e52eded|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%d1</td>
+                    
+                    <td><a href="http://solarlab.htb/%d1">http://solarlab.htb/%d1</a></td>
+                    <td><a href=""></a></td>
+                    <td>191981</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>107.817474ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52eded</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%cb|http://solarlab.htb/%cb||191977|177|7|8|text/html|109.858409ms|||066e52ede9|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%cb</td>
+                    
+                    <td><a href="http://solarlab.htb/%cb">http://solarlab.htb/%cb</a></td>
+                    <td><a href=""></a></td>
+                    <td>191977</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>109.858409ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52ede9</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%d5|http://solarlab.htb/%d5||191984|177|7|8|text/html|98.74481ms|||066e52edf0|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%d5</td>
+                    
+                    <td><a href="http://solarlab.htb/%d5">http://solarlab.htb/%d5</a></td>
+                    <td><a href=""></a></td>
+                    <td>191984</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>98.74481ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52edf0</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%c9|http://solarlab.htb/%c9||191991|177|7|8|text/html|98.503559ms|||066e52edf7|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%c9</td>
+                    
+                    <td><a href="http://solarlab.htb/%c9">http://solarlab.htb/%c9</a></td>
+                    <td><a href=""></a></td>
+                    <td>191991</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>98.503559ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52edf7</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%c1|http://solarlab.htb/%c1||191993|177|7|8|text/html|98.507923ms|||066e52edf9|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%c1</td>
+                    
+                    <td><a href="http://solarlab.htb/%c1">http://solarlab.htb/%c1</a></td>
+                    <td><a href=""></a></td>
+                    <td>191993</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>98.507923ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52edf9</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%c8|http://solarlab.htb/%c8||191992|177|7|8|text/html|98.542627ms|||066e52edf8|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%c8</td>
+                    
+                    <td><a href="http://solarlab.htb/%c8">http://solarlab.htb/%c8</a></td>
+                    <td><a href=""></a></td>
+                    <td>191992</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>98.542627ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52edf8</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%d3|http://solarlab.htb/%d3||191987|177|7|8|text/html|98.537662ms|||066e52edf3|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%d3</td>
+                    
+                    <td><a href="http://solarlab.htb/%d3">http://solarlab.htb/%d3</a></td>
+                    <td><a href=""></a></td>
+                    <td>191987</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>98.537662ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52edf3</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%d6|http://solarlab.htb/%d6||191983|177|7|8|text/html|100.481603ms|||066e52edef|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%d6</td>
+                    
+                    <td><a href="http://solarlab.htb/%d6">http://solarlab.htb/%d6</a></td>
+                    <td><a href=""></a></td>
+                    <td>191983</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>100.481603ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52edef</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%d0|http://solarlab.htb/%d0||191980|177|7|8|text/html|107.990556ms|||066e52edec|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%d0</td>
+                    
+                    <td><a href="http://solarlab.htb/%d0">http://solarlab.htb/%d0</a></td>
+                    <td><a href=""></a></td>
+                    <td>191980</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>107.990556ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52edec</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%d4|http://solarlab.htb/%d4||191986|177|7|8|text/html|98.556854ms|||066e52edf2|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%d4</td>
+                    
+                    <td><a href="http://solarlab.htb/%d4">http://solarlab.htb/%d4</a></td>
+                    <td><a href=""></a></td>
+                    <td>191986</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>98.556854ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52edf2</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%d2|http://solarlab.htb/%d2||191988|177|7|8|text/html|98.599931ms|||066e52edf4|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%d2</td>
+                    
+                    <td><a href="http://solarlab.htb/%d2">http://solarlab.htb/%d2</a></td>
+                    <td><a href=""></a></td>
+                    <td>191988</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>98.599931ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52edf4</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%c2|http://solarlab.htb/%c2||192003|177|7|8|text/html|132.170666ms|||066e52ee03|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%c2</td>
+                    
+                    <td><a href="http://solarlab.htb/%c2">http://solarlab.htb/%c2</a></td>
+                    <td><a href=""></a></td>
+                    <td>192003</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>132.170666ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52ee03</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%c7|http://solarlab.htb/%c7||192005|177|7|8|text/html|136.968849ms|||066e52ee05|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%c7</td>
+                    
+                    <td><a href="http://solarlab.htb/%c7">http://solarlab.htb/%c7</a></td>
+                    <td><a href=""></a></td>
+                    <td>192005</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>136.968849ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52ee05</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%c6|http://solarlab.htb/%c6||192007|177|7|8|text/html|134.910329ms|||066e52ee07|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%c6</td>
+                    
+                    <td><a href="http://solarlab.htb/%c6">http://solarlab.htb/%c6</a></td>
+                    <td><a href=""></a></td>
+                    <td>192007</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>134.910329ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52ee07</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%c5|http://solarlab.htb/%c5||192008|177|7|8|text/html|114.717231ms|||066e52ee08|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%c5</td>
+                    
+                    <td><a href="http://solarlab.htb/%c5">http://solarlab.htb/%c5</a></td>
+                    <td><a href=""></a></td>
+                    <td>192008</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>114.717231ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52ee08</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%c4|http://solarlab.htb/%c4||192010|177|7|8|text/html|79.780859ms|||066e52ee0a|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%c4</td>
+                    
+                    <td><a href="http://solarlab.htb/%c4">http://solarlab.htb/%c4</a></td>
+                    <td><a href=""></a></td>
+                    <td>192010</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>79.780859ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52ee0a</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%d9|http://solarlab.htb/%d9||192014|177|7|8|text/html|79.183937ms|||066e52ee0e|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%d9</td>
+                    
+                    <td><a href="http://solarlab.htb/%d9">http://solarlab.htb/%d9</a></td>
+                    <td><a href=""></a></td>
+                    <td>192014</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>79.183937ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52ee0e</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%c3|http://solarlab.htb/%c3||192011|177|7|8|text/html|79.504284ms|||066e52ee0b|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%c3</td>
+                    
+                    <td><a href="http://solarlab.htb/%c3">http://solarlab.htb/%c3</a></td>
+                    <td><a href=""></a></td>
+                    <td>192011</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>79.504284ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52ee0b</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%db|http://solarlab.htb/%db||192058|177|7|8|text/html|97.480732ms|||066e52ee3a|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%db</td>
+                    
+                    <td><a href="http://solarlab.htb/%db">http://solarlab.htb/%db</a></td>
+                    <td><a href=""></a></td>
+                    <td>192058</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>97.480732ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52ee3a</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%dd|http://solarlab.htb/%dd||192045|177|7|8|text/html|99.465235ms|||066e52ee2d|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%dd</td>
+                    
+                    <td><a href="http://solarlab.htb/%dd">http://solarlab.htb/%dd</a></td>
+                    <td><a href=""></a></td>
+                    <td>192045</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>99.465235ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52ee2d</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%df|http://solarlab.htb/%df||192043|177|7|8|text/html|99.584553ms|||066e52ee2b|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%df</td>
+                    
+                    <td><a href="http://solarlab.htb/%df">http://solarlab.htb/%df</a></td>
+                    <td><a href=""></a></td>
+                    <td>192043</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>99.584553ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52ee2b</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%de|http://solarlab.htb/%de||192044|177|7|8|text/html|99.548589ms|||066e52ee2c|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%de</td>
+                    
+                    <td><a href="http://solarlab.htb/%de">http://solarlab.htb/%de</a></td>
+                    <td><a href=""></a></td>
+                    <td>192044</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>99.548589ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52ee2c</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|login%3f|http://solarlab.htb/login%3f||194754|177|7|8|text/html|148.814658ms|||066e52f8c2|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>login%3f</td>
+                    
+                    <td><a href="http://solarlab.htb/login%3f">http://solarlab.htb/login%3f</a></td>
+                    <td><a href=""></a></td>
+                    <td>194754</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>148.814658ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e52f8c2</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%22julie%20roehm%22|http://solarlab.htb/%22julie%20roehm%22||201294|177|7|8|text/html|103.833947ms|||066e53124e|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%22julie%20roehm%22</td>
+                    
+                    <td><a href="http://solarlab.htb/%22julie%20roehm%22">http://solarlab.htb/%22julie%20roehm%22</a></td>
+                    <td><a href=""></a></td>
+                    <td>201294</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>103.833947ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e53124e</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%22britney%20spears%22|http://solarlab.htb/%22britney%20spears%22||201296|177|7|8|text/html|103.842299ms|||066e531250|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%22britney%20spears%22</td>
+                    
+                    <td><a href="http://solarlab.htb/%22britney%20spears%22">http://solarlab.htb/%22britney%20spears%22</a></td>
+                    <td><a href=""></a></td>
+                    <td>201296</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>103.842299ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e531250</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|%22james%20kim%22|http://solarlab.htb/%22james%20kim%22||201295|177|7|8|text/html|103.878592ms|||066e53124f|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>%22james%20kim%22</td>
+                    
+                    <td><a href="http://solarlab.htb/%22james%20kim%22">http://solarlab.htb/%22james%20kim%22</a></td>
+                    <td><a href=""></a></td>
+                    <td>201295</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>103.878592ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e53124f</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|http%3a%2f%2fjeremiahgrossman|http://solarlab.htb/http%3a%2f%2fjeremiahgrossman||205359|177|7|8|text/html|132.466374ms|||066e53222f|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>http%3a%2f%2fjeremiahgrossman</td>
+                    
+                    <td><a href="http://solarlab.htb/http%3a%2f%2fjeremiahgrossman">http://solarlab.htb/http%3a%2f%2fjeremiahgrossman</a></td>
+                    <td><a href=""></a></td>
+                    <td>205359</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>132.466374ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e53222f</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|http%3a%2f%2fweblog|http://solarlab.htb/http%3a%2f%2fweblog||205481|177|7|8|text/html|109.095239ms|||066e5322a9|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>http%3a%2f%2fweblog</td>
+                    
+                    <td><a href="http://solarlab.htb/http%3a%2f%2fweblog">http://solarlab.htb/http%3a%2f%2fweblog</a></td>
+                    <td><a href=""></a></td>
+                    <td>205481</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>109.095239ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e5322a9</td>
+                </tr>
+            
+                <div style="display:none">
+|result_raw|500|http%3a%2f%2fswik|http://solarlab.htb/http%3a%2f%2fswik||206245|177|7|8|text/html|86.687805ms|||066e5325a5|
+                </div>
+                <tr class="result-500" style="background-color: #de8dc1;">
+                    <td><font color="black" class="status-code">500</font></td>
+                    
+                        <td>http%3a%2f%2fswik</td>
+                    
+                    <td><a href="http://solarlab.htb/http%3a%2f%2fswik">http://solarlab.htb/http%3a%2f%2fswik</a></td>
+                    <td><a href=""></a></td>
+                    <td>206245</td>
+                    <td>177</td>
+                    <td>7</td>
+					<td>8</td>
+					<td>text/html</td>
+					<td>86.687805ms</td>
+                    <td></td>
+					<td></td>
+					<td>066e5325a5</td>
+                </tr>
+            
+        </tbody>
+      </table>
+
+        </div>
+        <br /><br />
+      </div>
+    </main>
+
+    
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#ffufreport').DataTable(
+            {
+                "aLengthMenu": [
+                    [250, 500, 1000, 2500, -1],
+                    [250, 500, 1000, 2500, "All"]
+                ]
+            }
+        )
+        $('select').formSelect();
+        });
+    </script>
+    <style>
+      body {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+      }
+
+      main {
+        flex: 1 0 auto;
+      }
+    </style>
+  </body>
+</html>
+
+	
